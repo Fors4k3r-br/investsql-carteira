@@ -2950,21 +2950,31 @@
     function showLockScreen() {
       const lockScreen = document.getElementById('lockScreen');
       const bioContainer = document.getElementById('biometricUnlockContainer');
+      const unlockForm = document.getElementById('unlockForm');
+      const subtitle = document.getElementById('lockScreenSubtitle');
       const bioEnabled = getSetting('biometrics_enabled') === '1';
+      const credentialId = getSetting('biometrics_cred_id');
 
       document.getElementById('unlockPinInput').value = '';
       document.getElementById('unlockErrorMsg').classList.add('hidden');
 
-      if (bioEnabled) {
+      // Com biometria configurada, não exibe solicitação de PIN/token.
+      // O PIN continua cadastrado apenas como requisito interno da configuração.
+      if (bioEnabled && credentialId) {
+        unlockForm.classList.add('hidden');
         bioContainer.classList.remove('hidden');
+        subtitle.textContent = 'Confirme sua identidade usando a biometria do smartphone.';
       } else {
+        unlockForm.classList.remove('hidden');
         bioContainer.classList.add('hidden');
+        subtitle.textContent = 'Digite seu PIN para acessar sua carteira.';
       }
 
       lockScreen.classList.remove('hidden');
       lucide.createIcons();
 
-      if (bioEnabled) {
+      if (bioEnabled && credentialId) {
+        // Tenta abrir a autenticação biométrica automaticamente.
         setTimeout(() => triggerBiometricUnlock(), 250);
       }
     }
@@ -2993,22 +3003,44 @@
     }
 
     async function triggerBiometricUnlock() {
+      const credentialIdBase64 = getSetting('biometrics_cred_id');
+
+      if (!credentialIdBase64) {
+        showToast('Biometria não cadastrada. Configure novamente nas opções de segurança.', 'error');
+        return;
+      }
+
       try {
         const challenge = new Uint8Array(32);
         crypto.getRandomValues(challenge);
+
+        // Usa exatamente a credencial registrada neste aparelho.
+        const binaryId = atob(credentialIdBase64);
+        const credentialId = Uint8Array.from(binaryId, char => char.charCodeAt(0));
+
         const assertion = await navigator.credentials.get({
           publicKey: {
             challenge,
+            allowCredentials: [{
+              type: 'public-key',
+              id: credentialId
+            }],
             userVerification: 'required',
             timeout: 60000
           }
         });
+
         if (assertion) {
           document.getElementById('lockScreen').classList.add('hidden');
           showToast('Desbloqueado via Biometria do Smartphone!', 'success');
         }
       } catch (err) {
+        // Mantém a tela protegida e permite tentar a biometria novamente.
         console.warn('Biometria cancelada ou indisponível:', err);
+        const subtitle = document.getElementById('lockScreenSubtitle');
+        if (subtitle) {
+          subtitle.textContent = 'Não foi possível concluir a biometria. Toque em “Usar Biometria” para tentar novamente.';
+        }
       }
     }
 
