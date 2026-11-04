@@ -5,6 +5,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="theme-color" content="#090d16" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="application-name" content="InvestSQL" />
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png" />
+  <link rel="apple-touch-icon" href="./icons/icon-192.png" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>InvestSQL - Carteira & Notas de Corretagem</title>
@@ -3319,6 +3324,16 @@
         toast.style.opacity = '0';
         setTimeout(() => toast.remove(), 300);
       }, 3400);
+    }
+  </script>
+
+  <script>
+    // PWA: registra o Service Worker no mesmo diretório do GitHub Pages.
+    if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./service-worker.js', { scope: './' })
+          .catch(error => console.error('Falha ao registrar Service Worker:', error));
+      });
     }
   </script>
 </body>
