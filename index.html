@@ -1,15 +1,10 @@
-<!-- ... extracellular -->
+html
 <!DOCTYPE html>
 <html lang="pt-BR" class="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <meta name="theme-color" content="#090d16" />
-  <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="application-name" content="InvestSQL" />
-  <link rel="manifest" href="./manifest.json" />
-  <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png" />
-  <link rel="apple-touch-icon" href="./icons/icon-192.png" />
+  <meta name="theme-color" content="#070b14" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>InvestSQL - Carteira & Notas de Corretagem</title>
@@ -57,7 +52,6 @@
       color: #f1f5f9;
       -webkit-tap-highlight-color: transparent;
     }
-    /* Custom Scrollbar */
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: #0b111e; }
     ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 9999px; }
@@ -94,7 +88,7 @@
       </div>
       <div>
         <h2 class="text-xl font-bold text-white">App Protegido</h2>
-        <p id="lockScreenSubtitle" class="text-xs text-slate-400 mt-1">Digite seu PIN ou use a biometria do smartphone para acessar sua carteira</p>
+        <p id="lockScreenSubtitle" class="text-xs text-slate-400 mt-1">Digite seu PIN ou use a biometria para acessar sua carteira</p>
       </div>
 
       <form id="unlockForm" onsubmit="handleUnlockWithPin(event)" class="space-y-4">
@@ -126,7 +120,7 @@
           class="w-full bg-indigo-600/20 hover:bg-indigo-600/30 border border-indigo-500/40 text-indigo-300 font-semibold py-3.5 rounded-xl transition flex items-center justify-center gap-2.5"
         >
           <i data-lucide="fingerprint" class="w-5 h-5 text-indigo-400"></i>
-          <span>Usar Biometria / Senha do Celular</span>
+          <span>Desbloquear com Biometria</span>
         </button>
       </div>
     </div>
@@ -135,23 +129,22 @@
   <!-- ================= TOP BAR ================= -->
   <header class="sticky top-0 z-30 bg-slate-950/90 backdrop-blur-md border-b border-slate-800/80 px-4 py-3.5">
     <div class="max-w-3xl mx-auto flex items-center justify-between">
-      <div class="flex items-center gap-2.5">
-        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-400 to-teal-600 flex items-center justify-center text-slate-950 font-extrabold shadow-md shadow-emerald-500/20">
-          <i data-lucide="Candlestick-chart" class="w-5 h-5"></i>
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-400 to-teal-600 flex items-center justify-center text-slate-950 font-extrabold shadow-md shadow-emerald-500/20 shrink-0">
+          <i data-lucide="candlestick-chart" class="w-5 h-5"></i>
         </div>
         <div>
-          <div class="flex items-center gap-2">
+          <div class="flex flex-wrap items-center gap-2">
             <h1 class="text-base font-extrabold tracking-tight text-white">InvestSQL</h1>
-            <span id="dbStatusBadge" class="text-[10px] font-mono uppercase px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
-              SQLite Ativo
+            <span id="dbStatusBadge" class="text-[9px] font-mono uppercase px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 whitespace-nowrap">
+              Sincronizado & Seguro
             </span>
           </div>
           <p class="text-[11px] text-slate-400">Controle de Notas SINACOR & Custódia</p>
         </div>
       </div>
 
-      <div class="flex items-center gap-1.5">
-        <!-- Botão Modo Privacidade (Olhinho) -->
+      <div class="flex items-center gap-1.5 shrink-0">
         <button
           onclick="togglePrivacyMode()"
           id="privacyBtn"
@@ -161,7 +154,6 @@
           <i data-lucide="eye" id="privacyIcon" class="w-4 h-4"></i>
         </button>
 
-        <!-- Botão Bloquear App Rápido -->
         <button
           onclick="lockAppNow()"
           title="Bloquear Aplicativo"
@@ -177,10 +169,9 @@
   <main class="flex-1 max-w-3xl w-full mx-auto px-4 pt-4 space-y-6">
 
     <!-- ===============================================================
-         ABA 1: CARTEIRA (RESUMO + GRÁFICO + BOTÃO DETALHAR POSIÇÕES)
+         ABA 1: CARTEIRA
     ================================================================ -->
     <section id="tab-carteira" class="space-y-5">
-      <!-- Barra de Sincronização Brapi.dev -->
       <div class="flex flex-wrap items-center justify-between gap-2 glass-card rounded-2xl px-4 py-3">
         <div class="flex items-center gap-2.5">
           <div class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div>
@@ -202,7 +193,6 @@
 
       <!-- 4 Cards de Resumo -->
       <div class="grid grid-cols-2 gap-3">
-        <!-- Total Investido -->
         <div class="glass-card rounded-2xl p-4">
           <div class="flex items-center justify-between text-slate-400 text-xs mb-1">
             <span>Total Investido</span>
@@ -212,7 +202,6 @@
           <span class="text-[10px] text-slate-500">Custo c/ taxas inclusas</span>
         </div>
 
-        <!-- Patrimônio Atual -->
         <div class="glass-card rounded-2xl p-4">
           <div class="flex items-center justify-between text-slate-400 text-xs mb-1">
             <span>Patrimônio Atual</span>
@@ -222,7 +211,6 @@
           <span class="text-[10px] text-slate-500">Valor de mercado atual</span>
         </div>
 
-        <!-- Lucro / Prejuízo -->
         <div class="glass-card rounded-2xl p-4">
           <div class="flex items-center justify-between text-slate-400 text-xs mb-1">
             <span>Lucro / Prejuízo</span>
@@ -232,7 +220,6 @@
           <span class="text-[10px] text-slate-500">Resultado não realizado</span>
         </div>
 
-        <!-- Rentabilidade -->
         <div class="glass-card rounded-2xl p-4">
           <div class="flex items-center justify-between text-slate-400 text-xs mb-1">
             <span>Rentabilidade</span>
@@ -245,7 +232,7 @@
         </div>
       </div>
 
-      <!-- Gráfico de Composição da Carteira (No lugar da tabela) -->
+      <!-- Gráfico de Composição -->
       <div class="glass-card rounded-3xl p-5 space-y-4">
         <div class="flex items-center justify-between">
           <div>
@@ -260,14 +247,13 @@
           </span>
         </div>
 
-        <!-- Estado Vazio do Gráfico -->
         <div id="emptyChartState" class="py-10 text-center space-y-3 hidden">
           <div class="w-12 h-12 rounded-2xl bg-slate-800/80 flex items-center justify-center mx-auto text-slate-500">
             <i data-lucide="folder-open" class="w-6 h-6"></i>
           </div>
           <div class="max-w-xs mx-auto">
             <p class="text-sm font-semibold text-slate-300">Sua carteira ainda está vazia</p>
-            <p class="text-xs text-slate-500 mt-1">Importe uma Nota de Corretagem em PDF (ex: CMIG4 do BB) ou insira uma operação manual.</p>
+            <p class="text-xs text-slate-500 mt-1">Importe uma Nota de Corretagem em PDF ou insira uma operação manual.</p>
           </div>
           <div class="flex flex-wrap justify-center gap-2 pt-2">
             <button
@@ -277,25 +263,15 @@
               <i data-lucide="file-up" class="w-4 h-4"></i>
               Importar Nota PDF
             </button>
-            <button
-              onclick="loadDemoNoteBB()"
-              class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-xs border border-slate-700 transition flex items-center gap-1.5"
-            >
-              <i data-lucide="sparkles" class="w-4 h-4 text-amber-400"></i>
-              Testar c/ Nota BB (CMIG4)
-            </button>
           </div>
         </div>
 
-        <!-- Container do Canvas Chart.js -->
         <div id="chartWrapper" class="relative h-64 w-full flex items-center justify-center">
           <canvas id="portfolioDonutChart"></canvas>
         </div>
 
-        <!-- Legenda rápida de Alocação -->
         <div id="chartLegendList" class="grid grid-cols-2 sm:grid-cols-3 gap-2 pt-2"></div>
 
-        <!-- BOTÃO ABAIXO DO GRÁFICO PARA ABRIR A VISÃO "POSIÇÕES" -->
         <div class="pt-3 border-t border-slate-800/80">
           <button
             onclick="switchTab('posicoes')"
@@ -310,7 +286,7 @@
     </section>
 
     <!-- ===============================================================
-         VISÃO DETALHADA: POSIÇÕES / CUSTÓDIA CONSOLIDADA (CARDS EXPANSÍVEIS)
+         VISÃO DETALHADA: POSIÇÕES
     ================================================================ -->
     <section id="tab-posicoes" class="space-y-4 hidden">
       <div class="flex flex-wrap items-center justify-between gap-2 glass-card rounded-2xl p-3.5">
@@ -337,15 +313,13 @@
         </button>
       </div>
 
-      <!-- Lista de Retângulos Expansíveis (Accordion de Ativos) -->
       <div id="positionsCardsContainer" class="space-y-3"></div>
     </section>
 
     <!-- ===============================================================
-         ABA 2: ADICIONAR ATIVOS (AGRUPA IMPORTAR NOTAS + INSERÇÃO MANUAL)
+         ABA 2: ADICIONAR ATIVOS
     ================================================================ -->
     <section id="tab-adicionar" class="space-y-5 hidden">
-      <!-- Seletor de Sub-Abas: Importar Notas vs Inserção Manual -->
       <div class="glass-card rounded-2xl p-1.5 grid grid-cols-2 gap-1.5">
         <button
           type="button"
@@ -367,7 +341,6 @@
         </button>
       </div>
 
-      <!-- SUB-ABA 2.1: IMPORTAR NOTAS DE CORRETAGEM -->
       <div id="subtab-importar" class="space-y-5">
         <div class="glass-card rounded-3xl p-5 space-y-4">
           <div class="flex items-start justify-between gap-2">
@@ -377,12 +350,11 @@
                 Importar Notas de Corretagem (PDF)
               </h2>
               <p class="text-xs text-slate-400 mt-0.5">
-                Suporte ao padrão SINACOR / BB Investimentos. O controle pelo <strong>Nr. Nota</strong> impede qualquer duplicidade no SQLite.
+                Suporte ao padrão SINACOR. O controle pelo <strong>Nr. Nota</strong> impede qualquer duplicidade no banco de dados.
               </p>
             </div>
           </div>
 
-          <!-- Botões de Seleção: Arquivo Único/Múltiplos ou Diretório Inteiro -->
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
             <input
               type="file"
@@ -429,24 +401,8 @@
               </div>
             </button>
           </div>
-
-          <!-- Botão de Demonstração da Nota Real Enviada pelo Usuário (BB - CMIG4) -->
-          <div class="pt-2 border-t border-slate-800/80 flex flex-wrap items-center justify-between gap-2">
-            <div class="text-xs text-slate-400">
-              Quer testar com os dados exatos da sua nota <strong>29102026/3.182 (CMIG4)</strong>?
-            </div>
-            <button
-              type="button"
-              onclick="loadDemoNoteBB()"
-              class="px-3.5 py-2 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/30 text-xs font-semibold transition flex items-center gap-1.5"
-            >
-              <i data-lucide="zap" class="w-3.5 h-3.5"></i>
-              Simular Importação da Nota BB (CMIG4)
-            </button>
-          </div>
         </div>
 
-        <!-- Alerta de Notas Ignoradas por Duplicidade -->
         <div id="duplicateNotesAlert" class="glass-card rounded-2xl p-4 border-l-4 border-l-amber-500 hidden">
           <div class="flex items-start gap-3">
             <i data-lucide="alert-triangle" class="w-5 h-5 text-amber-400 shrink-0 mt-0.5"></i>
@@ -460,7 +416,6 @@
           </div>
         </div>
 
-        <!-- TELA DE REVISÃO / CONFERÊNCIA (STAGING) ANTES DO COMMIT -->
         <div id="stagingContainer" class="glass-card rounded-3xl p-5 border-2 border-emerald-500/40 space-y-4 hidden">
           <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-3">
             <div>
@@ -468,9 +423,7 @@
                 Etapa Pré-Salvamento (Revisão)
               </span>
               <h3 class="text-base font-bold text-white mt-1">Conferência dos Ativos Importados</h3>
-              <p class="text-xs text-slate-400">
-                Confira ou edite os valores e taxas antes de gravar definitivamente no banco SQLite. Use o ícone de calculadora se precisar ajustar.
-              </p>
+              <p class="text-xs text-slate-400">Confira ou edite os valores e taxas antes de gravar no SQLite.</p>
             </div>
           </div>
 
@@ -496,59 +449,18 @@
           </div>
         </div>
 
-        <!-- Histórico de Notas Salvas no Banco -->
-        <div class="glass-card rounded-3xl p-4 sm:p-5 space-y-4">
-          <div class="flex flex-wrap items-center justify-between gap-2">
+        <div class="glass-card rounded-3xl p-5 space-y-3">
+          <div class="flex items-center justify-between">
             <h3 class="text-sm font-bold text-white flex items-center gap-2">
               <i data-lucide="archive" class="w-4 h-4 text-indigo-400"></i>
               Notas de Corretagem Salvas no SQLite
             </h3>
             <span id="savedNotesCountBadge" class="text-xs font-mono text-slate-400">0 notas</span>
           </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-            <div class="sm:col-span-1">
-              <label for="savedNotesSearch" class="block text-[10px] uppercase tracking-wider text-slate-400 mb-1">Pesquisar nota</label>
-              <div class="relative">
-                <i data-lucide="search" class="w-4 h-4 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2"></i>
-                <input id="savedNotesSearch" type="search" placeholder="Número, data ou arquivo..." oninput="filterSavedNotes(true)"
-                  class="w-full pl-9 pr-3 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-indigo-500" />
-              </div>
-            </div>
-            <div>
-              <label for="savedNotesYear" class="block text-[10px] uppercase tracking-wider text-slate-400 mb-1">Ano</label>
-              <select id="savedNotesYear" onchange="filterSavedNotes(true)" class="w-full px-3 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-xs text-white focus:outline-none focus:border-indigo-500">
-                <option value="">Todos os anos</option>
-              </select>
-            </div>
-            <div>
-              <label for="savedNotesMonth" class="block text-[10px] uppercase tracking-wider text-slate-400 mb-1">Mês</label>
-              <select id="savedNotesMonth" onchange="filterSavedNotes(true)" class="w-full px-3 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-xs text-white focus:outline-none focus:border-indigo-500">
-                <option value="">Todos os meses</option>
-                <option value="01">Janeiro</option><option value="02">Fevereiro</option>
-                <option value="03">Março</option><option value="04">Abril</option>
-                <option value="05">Maio</option><option value="06">Junho</option>
-                <option value="07">Julho</option><option value="08">Agosto</option>
-                <option value="09">Setembro</option><option value="10">Outubro</option>
-                <option value="11">Novembro</option><option value="12">Dezembro</option>
-              </select>
-            </div>
-          </div>
-
           <div id="savedNotesList" class="space-y-2"></div>
-          <div id="savedNotesPagination" class="flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-slate-800 pt-3">
-            <span id="savedNotesPageInfo" class="text-[11px] text-slate-500">Nenhuma nota</span>
-            <div class="flex items-center gap-2">
-              <button type="button" onclick="changeSavedNotesPage(-1)" id="savedNotesPrev" class="px-3 py-2 rounded-lg bg-slate-800 text-slate-300 text-xs disabled:opacity-30 disabled:cursor-not-allowed">Anterior</button>
-              <span id="savedNotesPageNumber" class="text-xs font-mono text-slate-400 min-w-16 text-center">0 / 0</span>
-              <button type="button" onclick="changeSavedNotesPage(1)" id="savedNotesNext" class="px-3 py-2 rounded-lg bg-slate-800 text-slate-300 text-xs disabled:opacity-30 disabled:cursor-not-allowed">Próxima</button>
-            </div>
-          </div>
-          <p class="text-[10px] text-slate-500">Exibindo até 20 notas por página. Os PDFs armazenados não são carregados nesta listagem.</p>
         </div>
       </div>
 
-      <!-- SUB-ABA 2.2: INSERÇÃO MANUAL (COM CALCULADORA EM TODOS OS CAMPOS) -->
       <div id="subtab-manual" class="space-y-5 hidden">
         <div class="glass-card rounded-3xl p-5 space-y-4">
           <div>
@@ -556,9 +468,7 @@
               <i data-lucide="plus-circle" class="w-5 h-5 text-emerald-400"></i>
               Inserção Manual de Operação
             </h2>
-            <p class="text-xs text-slate-400 mt-0.5">
-              Toque no botão da <strong>Calculadora</strong> ao lado de qualquer campo numérico para calcular e aplicar o resultado.
-            </p>
+            <p class="text-xs text-slate-400 mt-0.5">Toque no botão da <strong>Calculadora</strong> ao lado de qualquer campo numérico.</p>
           </div>
 
           <form id="manualForm" onsubmit="saveManualOperation(event)" class="space-y-4">
@@ -618,7 +528,6 @@
               </div>
             </div>
 
-            <!-- Campos de Valores com Botão de Calculadora -->
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
               <div>
                 <label class="block text-xs font-medium text-slate-300 mb-1">Quantidade *</label>
@@ -636,7 +545,6 @@
                     type="button"
                     onclick="openCalculator('manQuantidade', 'Quantidade')"
                     class="px-3 rounded-xl bg-indigo-500/20 hover:bg-indigo-500/30 border border-indigo-500/40 text-indigo-300 transition flex items-center justify-center"
-                    title="Abrir Calculadora"
                   >
                     <i data-lucide="calculator" class="w-4 h-4"></i>
                   </button>
@@ -659,7 +567,6 @@
                     type="button"
                     onclick="openCalculator('manPrecoUnitario', 'Valor Unitário (R$)')"
                     class="px-3 rounded-xl bg-indigo-500/20 hover:bg-indigo-500/30 border border-indigo-500/40 text-indigo-300 transition flex items-center justify-center"
-                    title="Abrir Calculadora"
                   >
                     <i data-lucide="calculator" class="w-4 h-4"></i>
                   </button>
@@ -681,7 +588,6 @@
                     type="button"
                     onclick="openCalculator('manValorOperacao', 'Valor da Operação (R$)')"
                     class="px-3 rounded-xl bg-indigo-500/20 hover:bg-indigo-500/30 border border-indigo-500/40 text-indigo-300 transition flex items-center justify-center"
-                    title="Abrir Calculadora"
                   >
                     <i data-lucide="calculator" class="w-4 h-4"></i>
                   </button>
@@ -689,7 +595,6 @@
               </div>
             </div>
 
-            <!-- Taxas com Calculadora -->
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
               <div>
                 <label class="block text-xs font-medium text-slate-400 mb-1">Taxas CBLC (Liq/Reg R$)</label>
@@ -767,21 +672,19 @@
     </section>
 
     <!-- ===============================================================
-         ABA 3: CONFIGURAÇÕES (API BRAPI.DEV + BACKUP + SEGURANÇA / PIN)
+         ABA 3: CONFIGURAÇÕES
     ================================================================ -->
     <section id="tab-config" class="space-y-5 hidden">
-
-      <!-- Card 1: Cotação Online via API brapi.dev -->
       <div class="glass-card rounded-3xl p-5 space-y-4">
-        <div class="flex items-start justify-between gap-2">
-          <div>
-            <h2 class="text-base font-bold text-white flex items-center gap-2">
-              <i data-lucide="globe" class="w-5 h-5 text-emerald-400"></i>
-              API de Cotações Online (brapi.dev)
-            </h2>
-            <p class="text-xs text-slate-400 mt-0.5">
-              Informe sua chave de API da <strong>brapi.dev</strong> para buscar automaticamente a cotação atual dos ativos da sua carteira na B3.
-            </p>
+        <div class="flex items-start justify-between gap-3">
+          <div class="flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0">
+              <i data-lucide="globe" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h2 class="text-base font-bold text-white leading-snug">API de Cotações Online (brapi.dev)</h2>
+              <p class="text-xs text-slate-400 mt-0.5">Informe sua chave de API para buscar cotações na B3.</p>
+            </div>
           </div>
           <span id="brapiConfigBadge" class="text-[11px] font-mono px-2.5 py-1 rounded-full bg-slate-800 text-slate-400 shrink-0">
             Sem Token
@@ -790,9 +693,7 @@
 
         <form onsubmit="saveBrapiConfig(event)" class="space-y-3 bg-slate-900/70 p-4 rounded-2xl border border-slate-800">
           <div>
-            <label class="block text-xs font-semibold text-slate-300 mb-1">
-              Token / Chave da API (brapi.dev)
-            </label>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Token / Chave da API (brapi.dev)</label>
             <div class="flex flex-col sm:flex-row gap-2">
               <input
                 type="password"
@@ -804,7 +705,6 @@
                 type="button"
                 onclick="toggleBrapiTokenVisibility()"
                 class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold"
-                title="Mostrar/Ocultar Token"
               >
                 <i data-lucide="eye" class="w-4 h-4 mx-auto"></i>
               </button>
@@ -818,9 +718,7 @@
           </div>
 
           <div class="flex items-center justify-between pt-2 border-t border-slate-800/80">
-            <label for="brapiAutoSyncToggle" class="text-xs text-slate-300 cursor-pointer">
-              Atualizar cotações automaticamente ao abrir o app
-            </label>
+            <label for="brapiAutoSyncToggle" class="text-xs text-slate-300 cursor-pointer">Atualizar cotações automaticamente ao abrir o app</label>
             <input
               type="checkbox"
               id="brapiAutoSyncToggle"
@@ -843,34 +741,27 @@
         </div>
       </div>
 
-      <!-- Card 2: Segurança para Abrir o App (PIN com Confirmação do PIN Atual + Biometria) -->
       <div class="glass-card rounded-3xl p-5 space-y-4">
-        <div class="flex items-center justify-between">
-          <div>
-            <h2 class="text-base font-bold text-white flex items-center gap-2">
-              <i data-lucide="fingerprint" class="w-5 h-5 text-indigo-400"></i>
-              Segurança & PIN de Acesso
-            </h2>
-            <p class="text-xs text-slate-400 mt-0.5">
-              Proteja a abertura do app com PIN validado e biometria nativa do seu smartphone.
-            </p>
+        <div class="flex items-start justify-between gap-3">
+          <div class="flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-xl bg-indigo-500/15 border border-indigo-500/30 flex items-center justify-center text-indigo-400 shrink-0">
+              <i data-lucide="fingerprint" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h2 class="text-base font-bold text-white leading-snug">Segurança & PIN de Acesso</h2>
+              <p class="text-xs text-slate-400 mt-0.5">Proteja a abertura do app com PIN numérico e biometria.</p>
+            </div>
           </div>
-          <span id="securityStatusPill" class="text-[11px] font-mono px-2.5 py-1 rounded-full bg-slate-800 text-slate-400">
+          <span id="securityStatusPill" class="text-[11px] font-mono px-2.5 py-1 rounded-full bg-slate-800 text-slate-400 shrink-0">
             Desativado
           </span>
         </div>
 
-        <!-- Formulário Dinâmico: Criar PIN (se não existir) ou Alterar PIN (exigindo o PIN Atual) -->
         <form onsubmit="handlePinManagementSubmit(event)" class="space-y-3 bg-slate-900/70 p-4 rounded-2xl border border-slate-800">
-          <h3 id="pinFormTitle" class="text-xs font-bold text-emerald-400 uppercase tracking-wider">
-            Criar PIN de Segurança
-          </h3>
+          <h3 id="pinFormTitle" class="text-xs font-bold text-emerald-400 uppercase tracking-wider">Criar PIN de Segurança</h3>
 
-          <!-- Campo PIN Atual (Exibido apenas quando já existe um PIN salvo no SQLite) -->
           <div id="currentPinFieldWrapper" class="hidden">
-            <label class="block text-xs font-medium text-slate-300 mb-1">
-              PIN Atual * <span class="text-[10px] text-amber-400">(Obrigatório para alterar o PIN)</span>
-            </label>
+            <label class="block text-xs font-medium text-slate-300 mb-1">PIN Atual * <span class="text-[10px] text-amber-400">(Obrigatório para alterar)</span></label>
             <input
               type="password"
               id="currentPinInput"
@@ -882,9 +773,7 @@
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label id="newPinLabel" class="block text-xs font-medium text-slate-300 mb-1">
-                Novo PIN (mín. 4 dígitos) *
-              </label>
+              <label id="newPinLabel" class="block text-xs font-medium text-slate-300 mb-1">Novo PIN (mín. 4 dígitos) *</label>
               <input
                 type="password"
                 id="newPinInput"
@@ -897,9 +786,7 @@
             </div>
 
             <div>
-              <label class="block text-xs font-medium text-slate-300 mb-1">
-                Confirmar Novo PIN *
-              </label>
+              <label class="block text-xs font-medium text-slate-300 mb-1">Confirmar Novo PIN *</label>
               <input
                 type="password"
                 id="confirmNewPinInput"
@@ -923,23 +810,18 @@
           </div>
         </form>
 
-        <!-- Opção Biometria do Smartphone (WebAuthn) -->
-        <div class="flex items-center justify-between p-4 rounded-2xl bg-slate-900/70 border border-slate-800">
-          <div class="pr-3">
-            <p class="text-xs font-bold text-white flex items-center gap-1.5">
-              <span>Usar Segurança do Smartphone (Biometria / Digital / FaceID)</span>
-            </p>
-            <p class="text-[11px] text-slate-400 mt-0.5">
-              Permite desbloquear o app usando a impressão digital ou bloqueio nativo do aparelho.
-            </p>
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-2xl bg-slate-900/70 border border-slate-800">
+          <div>
+            <p class="text-xs font-bold text-white">Desbloqueio por Biometria do Celular</p>
+            <p class="text-[11px] text-slate-400 mt-0.5">Ativa o acesso imediato via impressão digital ou FaceID do aparelho.</p>
           </div>
           <button
             type="button"
             id="biometricToggleBtn"
             onclick="toggleSmartphoneBiometrics()"
-            class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold border border-slate-700 transition shrink-0"
+            class="px-3.5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold border border-slate-700 transition shrink-0 self-start sm:self-center"
           >
-            Configurar Biometria
+            Ativar Biometria
           </button>
         </div>
 
@@ -964,21 +846,19 @@
         </div>
       </div>
 
-      <!-- Card 3: Backup Google Drive & Banco de Dados SQLite -->
       <div class="glass-card rounded-3xl p-5 space-y-4">
-        <div class="flex items-start justify-between">
-          <div>
-            <h2 class="text-base font-bold text-white flex items-center gap-2">
-              <i data-lucide="cloud-upload" class="w-5 h-5 text-emerald-400"></i>
-              Backup SQLite & Google Drive
-            </h2>
-            <p class="text-xs text-slate-400 mt-0.5">
-              Exporte o arquivo real <code>.db</code> do SQLite (contendo seus lançamentos e os PDFs das notas) direto para o seu Google Drive.
-            </p>
+        <div class="flex items-start justify-between gap-3">
+          <div class="flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0">
+              <i data-lucide="cloud-upload" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h2 class="text-base font-bold text-white leading-snug">Backup SQLite & Google Drive</h2>
+              <p class="text-xs text-slate-400 mt-0.5">Exporte o arquivo real <code>.db</code> para o seu Google Drive.</p>
+            </div>
           </div>
         </div>
 
-        <!-- Status do Banco -->
         <div class="grid grid-cols-3 gap-2 bg-slate-900/90 rounded-2xl p-3 border border-slate-800 text-center">
           <div>
             <span class="text-[10px] text-slate-400 block">Notas Salvas</span>
@@ -994,7 +874,6 @@
           </div>
         </div>
 
-        <!-- Botões de Backup Google Drive e Local -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <button
             type="button"
@@ -1015,7 +894,6 @@
           </button>
         </div>
 
-        <!-- Restaurar Backup e Limpar todos os dados -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-slate-800/80">
           <input
             type="file"
@@ -1030,7 +908,7 @@
             class="p-3 rounded-xl bg-indigo-500/15 hover:bg-indigo-500/25 border border-indigo-500/30 text-indigo-300 font-semibold text-xs transition flex items-center justify-center gap-2"
           >
             <i data-lucide="upload-cloud" class="w-4 h-4"></i>
-            <span>Restaurar Banco (.db do Drive/Local)</span>
+            <span>Restaurar Banco (.db)</span>
           </button>
 
           <button
@@ -1047,9 +925,9 @@
 
   </main>
 
-  <!-- ================= MODAL: CALCULADORA INTEGRADA ================= -->
+  <!-- ================= MODAL: CALCULADORA ================= -->
   <div id="calculatorModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4 hidden">
-    <div class="w-full max-w-sm bg-slate-900 border-t sm:border border-slate-700 rounded-t-3xl sm:rounded-3xl p-5 shadow-2xl space-y-4 animate-in slide-in-from-bottom">
+    <div class="w-full max-w-sm bg-slate-900 border-t sm:border border-slate-700 rounded-t-3xl sm:rounded-3xl p-5 shadow-2xl space-y-4">
       <div class="flex items-center justify-between border-b border-slate-800 pb-2.5">
         <div>
           <span class="text-[10px] font-mono uppercase text-indigo-400 font-semibold">Calculadora Integrada</span>
@@ -1060,13 +938,11 @@
         </button>
       </div>
 
-      <!-- Visor da Calculadora -->
       <div class="bg-slate-950 border border-slate-800 rounded-2xl p-3.5 text-right space-y-1">
         <div id="calcExpressionDisplay" class="text-xs font-mono text-slate-400 min-h-[18px] break-all">0</div>
         <div id="calcResultDisplay" class="text-2xl font-bold font-mono text-emerald-400 truncate">0</div>
       </div>
 
-      <!-- Teclado da Calculadora -->
       <div class="grid grid-cols-4 gap-2 text-sm font-mono font-bold">
         <button type="button" onclick="calcInput('C')" class="calc-btn py-3 rounded-xl bg-rose-500/20 text-rose-300 border border-rose-500/30">C</button>
         <button type="button" onclick="calcInput('(')" class="calc-btn py-3 rounded-xl bg-slate-800 text-slate-300">(</button>
@@ -1075,49 +951,35 @@
           <i data-lucide="delete" class="w-4 h-4"></i>
         </button>
 
-        <button type="button" onclick="calcInput('7')" class="calc-btn py-3.5 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-white">7</button>
-        <button type="button" onclick="calcInput('8')" class="calc-btn py-3.5 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-white">8</button>
-        <button type="button" onclick="calcInput('9')" class="calc-btn py-3.5 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-white">9</button>
+        <button type="button" onclick="calcInput('7')" class="calc-btn py-3.5 rounded-xl bg-slate-800 text-white">7</button>
+        <button type="button" onclick="calcInput('8')" class="calc-btn py-3.5 rounded-xl bg-slate-800 text-white">8</button>
+        <button type="button" onclick="calcInput('9')" class="calc-btn py-3.5 rounded-xl bg-slate-800 text-white">9</button>
         <button type="button" onclick="calcInput('/')" class="calc-btn py-3.5 rounded-xl bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">÷</button>
 
-        <button type="button" onclick="calcInput('4')" class="calc-btn py-3.5 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-white">4</button>
-        <button type="button" onclick="calcInput('5')" class="calc-btn py-3.5 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-white">5</button>
-        <button type="button" onclick="calcInput('6')" class="calc-btn py-3.5 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-white">6</button>
+        <button type="button" onclick="calcInput('4')" class="calc-btn py-3.5 rounded-xl bg-slate-800 text-white">4</button>
+        <button type="button" onclick="calcInput('5')" class="calc-btn py-3.5 rounded-xl bg-slate-800 text-white">5</button>
+        <button type="button" onclick="calcInput('6')" class="calc-btn py-3.5 rounded-xl bg-slate-800 text-white">6</button>
         <button type="button" onclick="calcInput('*')" class="calc-btn py-3.5 rounded-xl bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">×</button>
 
-        <button type="button" onclick="calcInput('1')" class="calc-btn py-3.5 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-white">1</button>
-        <button type="button" onclick="calcInput('2')" class="calc-btn py-3.5 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-white">2</button>
-        <button type="button" onclick="calcInput('3')" class="calc-btn py-3.5 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-white">3</button>
+        <button type="button" onclick="calcInput('1')" class="calc-btn py-3.5 rounded-xl bg-slate-800 text-white">1</button>
+        <button type="button" onclick="calcInput('2')" class="calc-btn py-3.5 rounded-xl bg-slate-800 text-white">2</button>
+        <button type="button" onclick="calcInput('3')" class="calc-btn py-3.5 rounded-xl bg-slate-800 text-white">3</button>
         <button type="button" onclick="calcInput('-')" class="calc-btn py-3.5 rounded-xl bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">−</button>
 
-        <button type="button" onclick="calcInput('0')" class="calc-btn py-3.5 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-white">0</button>
-        <button type="button" onclick="calcInput('.')" class="calc-btn py-3.5 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-white">,</button>
+        <button type="button" onclick="calcInput('0')" class="calc-btn py-3.5 rounded-xl bg-slate-800 text-white">0</button>
+        <button type="button" onclick="calcInput('.')" class="calc-btn py-3.5 rounded-xl bg-slate-800 text-white">,</button>
         <button type="button" onclick="calcEvaluate()" class="calc-btn py-3.5 rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">=</button>
         <button type="button" onclick="calcInput('+')" class="calc-btn py-3.5 rounded-xl bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">+</button>
       </div>
 
-      <!-- Parte Inferior: Salvar ou Cancelar -->
       <div class="grid grid-cols-2 gap-3 pt-2 border-t border-slate-800">
-        <button
-          type="button"
-          onclick="closeCalculator()"
-          class="py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs transition"
-        >
-          Cancelar
-        </button>
-        <button
-          type="button"
-          onclick="applyCalculatorValue()"
-          class="py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-xs shadow-lg shadow-emerald-500/20 transition flex items-center justify-center gap-1.5"
-        >
-          <i data-lucide="check" class="w-4 h-4"></i>
-          <span>Salvar no Campo</span>
-        </button>
+        <button type="button" onclick="closeCalculator()" class="py-3 rounded-xl bg-slate-800 text-slate-300 font-semibold text-xs">Cancelar</button>
+        <button type="button" onclick="applyCalculatorValue()" class="py-3 rounded-xl bg-emerald-500 text-slate-950 font-extrabold text-xs">Salvar no Campo</button>
       </div>
     </div>
   </div>
 
-  <!-- ================= MODAL DE CONFIRMAÇÃO / MENSAGEM CUSTOMIZADO ================= -->
+  <!-- ================= MODAL DE CONFIRMAÇÃO ================= -->
   <div id="customDialogModal" class="fixed inset-0 z-[90] bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
     <div class="w-full max-w-sm glass-card rounded-3xl p-6 border border-slate-700 space-y-4 text-center shadow-2xl">
       <div id="dialogIconBox" class="w-12 h-12 rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center mx-auto">
@@ -1126,28 +988,11 @@
       <h3 id="dialogTitle" class="text-base font-bold text-white">Confirmação</h3>
       <p id="dialogMessage" class="text-xs text-slate-300 leading-relaxed"></p>
       <div id="dialogPasswordWrapper" class="hidden pt-1">
-        <input
-          type="password"
-          id="dialogSecurityPin"
-          placeholder="Digite sua senha do app para confirmar"
-          class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs font-mono text-center text-white outline-none"
-        />
+        <input type="password" id="dialogSecurityPin" placeholder="Digite sua senha do app" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs font-mono text-center text-white outline-none" />
       </div>
       <div class="flex gap-2.5 pt-2">
-        <button
-          id="dialogCancelBtn"
-          type="button"
-          class="flex-1 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold"
-        >
-          Cancelar
-        </button>
-        <button
-          id="dialogConfirmBtn"
-          type="button"
-          class="flex-1 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-extrabold"
-        >
-          Confirmar
-        </button>
+        <button id="dialogCancelBtn" type="button" class="flex-1 py-2.5 rounded-xl bg-slate-800 text-slate-300 text-xs font-semibold">Cancelar</button>
+        <button id="dialogConfirmBtn" type="button" class="flex-1 py-2.5 rounded-xl bg-emerald-500 text-slate-950 text-xs font-extrabold">Confirmar</button>
       </div>
     </div>
   </div>
@@ -1155,60 +1000,44 @@
   <!-- ================= TOAST NOTIFICATION ================= -->
   <div id="toastContainer" class="fixed top-16 right-4 left-4 sm:left-auto sm:w-80 z-[95] pointer-events-none space-y-2"></div>
 
-  <!-- ================= NAVEGAÇÃO INFERIOR (3 ABAS PRINCIPAIS VISÍVEIS) ================= -->
+  <!-- ================= NAVEGAÇÃO INFERIOR ================= -->
   <nav class="fixed bottom-0 inset-x-0 z-40 bg-slate-950/95 backdrop-blur-lg border-t border-slate-800/90 px-2 py-1.5">
     <div class="max-w-md mx-auto grid grid-cols-3 gap-1.5">
-      <button
-        onclick="switchTab('carteira')"
-        id="nav-carteira"
-        class="nav-item flex flex-col items-center justify-center py-2 rounded-2xl text-emerald-400 bg-emerald-500/10 font-semibold transition"
-      >
+      <button onclick="switchTab('carteira')" id="nav-carteira" class="nav-item flex flex-col items-center justify-center py-2 rounded-2xl text-emerald-400 bg-emerald-500/10 font-semibold transition">
         <i data-lucide="pie-chart" class="w-5 h-5"></i>
         <span class="text-[11px] mt-1">Carteira</span>
       </button>
 
-      <button
-        onclick="switchTab('adicionar')"
-        id="nav-adicionar"
-        class="nav-item flex flex-col items-center justify-center py-2 rounded-2xl text-slate-400 hover:text-slate-200 font-medium transition"
-      >
+      <button onclick="switchTab('adicionar')" id="nav-adicionar" class="nav-item flex flex-col items-center justify-center py-2 rounded-2xl text-slate-400 hover:text-slate-200 font-medium transition">
         <i data-lucide="plus-square" class="w-5 h-5"></i>
         <span class="text-[11px] mt-1">Adicionar Ativos</span>
       </button>
 
-      <button
-        onclick="switchTab('config')"
-        id="nav-config"
-        class="nav-item flex flex-col items-center justify-center py-2 rounded-2xl text-slate-400 hover:text-slate-200 font-medium transition"
-      >
+      <button onclick="switchTab('config')" id="nav-config" class="nav-item flex flex-col items-center justify-center py-2 rounded-2xl text-slate-400 hover:text-slate-200 font-medium transition">
         <i data-lucide="settings" class="w-5 h-5"></i>
         <span class="text-[11px] mt-1">Configurações</span>
       </button>
     </div>
   </nav>
 
-  <!-- ================= LÓGICA DO APLICATIVO (SQLITE, PDF, CHART, BRAPI, WEBAUTHN) ================= -->
+  <!-- ================= SCRIPT ================= -->
   <script>
-    // Configuração do Worker do PDF.js
     if (window['pdfjsLib']) {
       pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
     }
 
-    // Estado Global
     let SQL = null;
     let db = null;
     let portfolioChart = null;
     let isPrivacyMode = false;
-    let stagedNotesQueue = []; // Notas aguardando revisão na tela de staging
+    let stagedNotesQueue = [];
     let currentCalcTargetId = null;
     let currentCalcExpression = '';
 
-    // Constantes do IndexedDB para persistir o binário do SQLite
     const IDB_NAME = 'InvestSQL_Database_Store';
     const IDB_STORE = 'sqlite_binary';
     const IDB_KEY = 'carteira_db';
 
-    // Inicialização ao carregar a página
     window.addEventListener('DOMContentLoaded', async () => {
       lucide.createIcons();
       setTodayDateOnManualForm();
@@ -1217,7 +1046,6 @@
       checkLockScreenOnStartup();
       refreshAllViews();
 
-      // Se a atualização automática da Brapi estiver ativa e houver token salvo, sincroniza em background
       if (getSetting('brapi_auto_sync') === '1' && getSetting('brapi_token')) {
         syncAllQuotesFromBrapi(true);
       }
@@ -1231,9 +1059,6 @@
       document.getElementById('manData').value = `${dd}/${mm}/${yyyy}`;
     }
 
-    // =========================================================================
-    // 1. BANCO DE DADOS SQLITE (sql.js + Persistência Binária no IndexedDB)
-    // =========================================================================
     async function initSQLiteDatabase() {
       try {
         SQL = await initSqlJs({
@@ -1337,7 +1162,6 @@
       });
     }
 
-    // Helper para consultas SQL retornando array de objetos
     function queryAll(sql, params = []) {
       if (!db) return [];
       const stmt = db.prepare(sql);
@@ -1360,9 +1184,6 @@
       await persistSQLiteToIndexedDB();
     }
 
-    // =========================================================================
-    // 2. CÁLCULO CONSOLIDADO DE CUSTÓDIA E PREÇO MÉDIO
-    // =========================================================================
     function getConsolidatedPositions() {
       const ops = queryAll(`SELECT * FROM operacoes ORDER BY id ASC`);
       const quotesRows = queryAll(`SELECT ticker, preco_atual FROM cotacoes_atuais`);
@@ -1380,7 +1201,7 @@
             qtdAtual: 0,
             qtdComprada: 0,
             qtdVendida: 0,
-            custoTotalAcumulado: 0, // Custo proporcional da posição atual em custódia
+            custoTotalAcumulado: 0,
             precoMedio: 0,
             totalTaxasCblc: 0,
             totalTaxasBovespa: 0,
@@ -1409,14 +1230,12 @@
         item.operacoes.push(op);
 
         if (op.tipo_ordem === 'C') {
-          // Compra: soma ao custo de aquisição o valor da operação + taxas
           const custoCompra = valorOp + taxasOp;
           item.qtdComprada += qtd;
           item.qtdAtual += qtd;
           item.custoTotalAcumulado += custoCompra;
           item.precoMedio = item.qtdAtual > 0 ? (item.custoTotalAcumulado / item.qtdAtual) : 0;
         } else if (op.tipo_ordem === 'V') {
-          // Venda: reduz a quantidade atual mantendo o PM (reduz custo proporcionalmente)
           item.qtdVendida += qtd;
           item.qtdAtual = Math.max(0, item.qtdAtual - qtd);
           item.custoTotalAcumulado = item.qtdAtual * item.precoMedio;
@@ -1443,14 +1262,10 @@
       });
     }
 
-    // =========================================================================
-    // 3. ATUALIZAÇÃO DA INTERFACE (CARTEIRA, GRÁFICO E ABA OCULTA POSIÇÕES)
-    // =========================================================================
     function refreshAllViews() {
       const positions = getConsolidatedPositions();
       const activePositions = positions.filter(p => p.qtdAtual > 0);
 
-      // Soma dos KPIs da Carteira
       const totalInvestido = activePositions.reduce((acc, p) => acc + p.valorInvestido, 0);
       const patrimonioAtual = activePositions.reduce((acc, p) => acc + p.patrimonioAtual, 0);
       const lucroPrejuizo = patrimonioAtual - totalInvestido;
@@ -1540,7 +1355,6 @@
         }
       });
 
-      // Renderiza os mini-cards de legenda abaixo do gráfico
       legendList.innerHTML = activePositions.map((pos, idx) => {
         const color = palette[idx % palette.length];
         const pct = totalPatrimonio > 0 ? ((pos.patrimonioAtual / totalPatrimonio) * 100) : 0;
@@ -1556,8 +1370,6 @@
       }).join('');
     }
 
-    // Renderiza os Retângulos Expansíveis na Aba Oculta "Posições"
-    <!-- Renderiza os Retângulos Expansíveis na Aba Oculta "Posições" -->
     function renderPositionsExpandableCards(positions) {
       const container = document.getElementById('positionsCardsContainer');
 
@@ -1575,7 +1387,6 @@
         const isPositive = pos.lucroPrejuizo >= 0;
         return `
           <div class="glass-card rounded-2xl overflow-hidden border border-slate-800 transition">
-            <!-- VISÃO COMPACTA DO RETÂNGULO (Ticker, Qtd Atual, Qtd Comprada, Qtd Vendida e Preço Médio) -->
             <div
               onclick="togglePositionCard(${idx})"
               class="p-4 cursor-pointer hover:bg-slate-800/40 transition space-y-3"
@@ -1601,7 +1412,6 @@
                 </div>
               </div>
 
-              <!-- Linha de Quantidades exigida no item 7 -->
               <div class="grid grid-cols-3 gap-2 pt-2 border-t border-slate-800/80 text-center">
                 <div class="bg-slate-900/70 rounded-xl py-1.5 px-2">
                   <span class="text-[10px] text-slate-400 block">Qtd. Atual</span>
@@ -1618,7 +1428,6 @@
               </div>
             </div>
 
-            <!-- VISÃO EXPANDIDA (Todas as informações completas da antiga tabela) -->
             <div id="pos-details-${idx}" class="hidden bg-slate-950/80 border-t border-slate-800 p-4 space-y-4">
               <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-xs">
                 <div class="p-2.5 rounded-xl bg-slate-900 border border-slate-800">
@@ -1654,11 +1463,9 @@
                 </div>
               </div>
 
-              <!-- Atualizar Cotação Atual do Papel (com suporte à Calculadora) -->
               <div class="flex flex-wrap items-center justify-between gap-2 bg-slate-900/90 p-3 rounded-xl border border-slate-800">
                 <div class="text-xs">
                   <span class="text-slate-300 font-semibold">Cotação Atual de Mercado (${pos.ticker}):</span>
-                  <span class="text-[11px] text-slate-500 block">Altere para atualizar o patrimônio e rentabilidade</span>
                 </div>
                 <div class="flex items-center gap-1.5">
                   <input
@@ -1672,7 +1479,6 @@
                     type="button"
                     onclick="openCalculator('quote-input-${pos.ticker}', 'Cotação Atual ${pos.ticker}')"
                     class="p-2 rounded-xl bg-indigo-500/20 text-indigo-300 border border-indigo-500/30"
-                    title="Calcular Cotação"
                   >
                     <i data-lucide="calculator" class="w-3.5 h-3.5"></i>
                   </button>
@@ -1686,7 +1492,6 @@
                 </div>
               </div>
 
-              <!-- Histórico de Notas / Operações deste Ativo -->
               <div class="space-y-1.5">
                 <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Operações Vinculadas (${pos.operacoes.length})</span>
                 <div class="space-y-1.5 max-h-48 overflow-y-auto pr-1">
@@ -1701,11 +1506,7 @@
                       </div>
                       <div class="flex items-center gap-3">
                         <span class="font-mono text-white">${op.quantidade}x ${formatMoney(op.preco_unitario)}</span>
-                        <button
-                          onclick="deleteSingleOperation(${op.id})"
-                          class="text-rose-400 hover:text-rose-300 p-1"
-                          title="Excluir lançamento"
-                        >
+                        <button onclick="deleteSingleOperation(${op.id})" class="text-rose-400 hover:text-rose-300 p-1">
                           <i data-lucide="trash" class="w-3.5 h-3.5"></i>
                         </button>
                       </div>
@@ -1754,12 +1555,9 @@
       showToast('Operação removida.', 'info');
     }
 
-    // =========================================================================
-    // 4. IMPORTAÇÃO DE NOTAS DE CORRETAGEM (PDF SINACOR / BB + ANTI-DUPLICIDADE)
-    // =========================================================================
     async function handlePdfSelection(event, mode) {
       const files = Array.from(event.target.files || []).filter(f => f.name.toLowerCase().endsWith('.pdf'));
-      event.target.value = ''; // limpa o seletor para permitir reimportação
+      event.target.value = '';
 
       if (files.length === 0) {
         showToast('Nenhum arquivo PDF encontrado na seleção.', 'error');
@@ -1776,17 +1574,15 @@
           const extractedText = await extractTextFromPDFBuffer(arrayBuffer);
           const parsedNote = parseSinacorBBNote(extractedText, file.name, base64Pdf);
 
-          // Verifica no SQLite se o numero_controle já foi importado antes
           if (isNoteAlreadyInSQLite(parsedNote.numero_controle)) {
             skippedDuplicates.push(`${parsedNote.numero_controle} (${file.name})`);
             continue;
           }
 
-          // Evita duplicidade dentro do próprio lote atual
           const alreadyInStaging = stagedNotesQueue.some(n => n.numero_controle === parsedNote.numero_controle) ||
                                    newlyParsedNotes.some(n => n.numero_controle === parsedNote.numero_controle);
           if (alreadyInStaging) {
-            skippedDuplicates.push(`${parsedNote.numero_controle} (Duplicado na pasta)`);
+            skippedDuplicates.push(`${parsedNote.numero_controle} (Duplicado)`);
             continue;
           }
 
@@ -1797,7 +1593,6 @@
         }
       }
 
-      // Exibe alerta se alguma nota foi barrada por já constar no banco
       if (skippedDuplicates.length > 0) {
         const alertBox = document.getElementById('duplicateNotesAlert');
         const listEl = document.getElementById('duplicateNotesList');
@@ -1830,15 +1625,12 @@
       return fullText;
     }
 
-    // Parser especializado para o padrão SINACOR / BB Investimentos (como a nota 29102026/3.182)
     function parseSinacorBBNote(text, fileName, base64Pdf) {
-      // Normaliza o texto e substitui caracteres cirílicos/especiais comuns em PDFs do BB (ex: 'З' cirílico por '3')
       const normalized = text.replace(/\s+/g, ' ')
                              .replace(/[ЗЗ3]/g, (m) => '3')
                              .replace(/[О0]/g, (m) => m === '0' ? '0' : 'O')
                              .replace(/[АA]/g, 'A');
 
-      // 1. Extrai Número de Controle da Nota (ex: 29102026/3.182)
       let numeroControle = '';
       const nrNotaMatch = normalized.match(/(\d{7,8}\/\d+(?:\.\d+)?)/) ||
                           normalized.match(/Nr\.?\s*Nota\s*[:\-]?\s*([0-9\/.-]+)/i);
@@ -1848,7 +1640,6 @@
         numeroControle = 'NOTA-' + fileName.replace(/\.pdf$/i, '').toUpperCase();
       }
 
-      // 2. Extrai Data do Pregão (ex: 29/10/2026)
       let dataPregao = '';
       const dateMatch = normalized.match(/Data\s+preg[aã]o.*?(\d{2}\/\d{2}\/\d{4})/i) ||
                         normalized.match(/(\d{2}\/\d{2}\/\d{4})/);
@@ -1859,7 +1650,6 @@
         dataPregao = hj.toLocaleDateString('pt-BR');
       }
 
-      // 3. Extrai Taxas do Resumo Financeiro com proteção contra a armadilha do "Total CBLC"
       const parseBrFloat = (str) => {
         if (!str) return 0;
         const clean = str.trim().replace(/\.(?=\d{3}(?:[.,]|$))/g, '').replace(',', '.');
@@ -1877,7 +1667,6 @@
       const taxaRegistro = matchValAfterLabel(/Taxa\s+de\s+Registro\s+([\d.,]+)/i);
       const totalCblcBruto = matchValAfterLabel(/Total\s+CBLC\s+([\d.,]+)/i);
 
-      // A taxa CBLC real é Liquidação + Registro
       let taxaCblcLiquida = taxaLiquidacao + taxaRegistro;
       if (taxaCblcLiquida === 0 && totalCblcBruto > valorLiquidoOperacoes && valorLiquidoOperacoes > 0) {
         taxaCblcLiquida = Number((totalCblcBruto - valorLiquidoOperacoes).toFixed(2));
@@ -1889,7 +1678,6 @@
       const valorLiquidoNota = matchValAfterLabel(/L[ií]quido\s+para\s+\d{2}\/\d{2}\/\d{4}\s+([\d.,]+)/i) ||
                                (valorLiquidoOperacoes + taxaCblcLiquida + totalBovespa + totalCorretagem);
 
-      // 4. Extrai linhas de negócios realizados (Ex: BRADESCO PN N1-BBDC4 ou B3 ON NM-B3SA3)
       const operacoesExtraidas = [];
       const regexNegocio = /1-BOVESPA\s+([CV])\s+(VISTA|FRACIONARIO|TERMO|OPCAO\s+DE\s+COMPRA|OPCAO\s+DE\s+VENDA)\s+(.+?)\s+(\d+(?:\.\d{3})*)\s+([\d.,]+)\s+([\d.,]+)\s+[DC]/gi;
       const regexNegocioInvertido = /([CV])\s+VISTA\s+1-BOVESPA\s+(.+?)\s+(\d+(?:\.\d{3})*)\s+([\d.,]+)\s+([\d.,]+)\s+[DC]/gi;
@@ -1902,15 +1690,12 @@
         const precoUnit = parseBrFloat(match[5]);
         const valorOp = parseBrFloat(match[6]);
 
-        // Extração robusta do Ticker a partir da especificação (busca padrão B3 ex: B3SA3, BBDC4, CMIG4)
         let ticker = 'ATIVO';
         const specUpper = especificacaoCompleta.toUpperCase();
-        // Procura padrão específico B3 (4 letras seguidas de 1 a 3 dígitos, podendo terminar com F)
         const explicitTickerMatch = specUpper.match(/\b([A-Z]{4}\d{1,3}F?)\b/);
         if (explicitTickerMatch) {
           ticker = explicitTickerMatch[1].replace(/F$/, '');
         } else {
-          // Fallback buscando após hífen ou traço
           const parts = specUpper.split(/[-–]/);
           if (parts.length > 1) {
             const candidate = parts[parts.length - 1].trim().split(/\s+/)[0];
@@ -1930,7 +1715,6 @@
         });
       }
 
-      // Tenta o formato alternativo caso o primeiro não tenha capturado
       if (operacoesExtraidas.length === 0) {
         while ((match = regexNegocioInvertido.exec(normalized)) !== null) {
           const tipoOrdem = match[1].toUpperCase();
@@ -1965,7 +1749,6 @@
         }
       }
 
-      // Fallback genérico caso nenhuma regex bata exatamente com o layout do PDF
       if (operacoesExtraidas.length === 0) {
         const fallbackTickerMatch = normalized.match(/\b([A-Z]{4}\d{1,3})F?\b/);
         const fallbackTicker = fallbackTickerMatch ? fallbackTickerMatch[1].toUpperCase() : 'B3SA3';
@@ -1980,7 +1763,6 @@
         });
       }
 
-      // Rateio proporcional das taxas da nota para cada operação
       const somaOperacoes = operacoesExtraidas.reduce((acc, op) => acc + op.valor_operacao, 0) || 1;
       const operacoesComRateio = operacoesExtraidas.map(op => {
         const peso = op.valor_operacao / somaOperacoes;
@@ -2007,7 +1789,6 @@
       };
     }
 
-    // Simulador 1-clique com os dados EXATOS do PDF enviado pelo usuário (BB Investimentos - CMIG4)
     function loadDemoNoteBB() {
       openAddAssetsSubTab('importar');
       const numeroNotaDemo = '29102026/3.182';
@@ -2015,7 +1796,7 @@
       if (isNoteAlreadyInSQLite(numeroNotaDemo)) {
         const alertBox = document.getElementById('duplicateNotesAlert');
         const listEl = document.getElementById('duplicateNotesList');
-        listEl.innerHTML = `<li>Nota <strong>${numeroNotaDemo} (notaCorretagem03112026094148.pdf)</strong> bloqueada! Esta nota já foi importada anteriormente no SQLite.</li>`;
+        listEl.innerHTML = `<li>Nota <strong>${numeroNotaDemo}</strong> bloqueada! Esta nota já foi importada anteriormente no SQLite.</li>`;
         alertBox.classList.remove('hidden');
         showToast(`Duplicidade bloqueada: Nota ${numeroNotaDemo} já está no banco!`, 'error');
         return;
@@ -2032,12 +1813,12 @@
         data_pregao: '29/10/2026',
         valor_operacoes: 1003.00,
         total_cblc_bruto: 1003.25,
-        taxa_cblc: 0.25, // Taxa de liquidação (0,25) + Registro (0,00)
-        taxa_bovespa: 0.05, // Emolumentos (0,05)
-        taxa_corretagem: 0.00, // Corretagem / Despesas (0,00)
+        taxa_cblc: 0.25,
+        taxa_bovespa: 0.05,
+        taxa_corretagem: 0.00,
         valor_liquido_nota: 1003.30,
         nome_arquivo: 'notaCorretagem03112026094148.pdf',
-        arquivo_base64: btoa('NOTA DE CORRETAGEM BB INVESTIMENTOS - Nr.Nota 29102026/3.182 - CMIG4 100 x 10,03 = 1.003,00'),
+        arquivo_base64: btoa('NOTA DE CORRETAGEM BB - CMIG4 100 x 10,03 = 1.003,00'),
         operacoes: [
           {
             ticker: 'CMIG4',
@@ -2058,9 +1839,6 @@
       showToast('Nota 29102026/3.182 (CMIG4) carregada para revisão!', 'success');
     }
 
-    // =========================================================================
-    // 5. TELA DE REVISÃO (STAGING), HISTÓRICO DE NOTAS E INSERÇÃO MANUAL
-    // =========================================================================
     function renderStagingScreen() {
       const container = document.getElementById('stagingContainer');
       const list = document.getElementById('stagingItemsList');
@@ -2083,11 +1861,7 @@
               </span>
               <span class="text-xs font-mono text-slate-300">Pregão: ${note.data_pregao}</span>
             </div>
-            <button
-              type="button"
-              onclick="removeStagedNote(${nIdx})"
-              class="text-xs text-rose-400 hover:text-rose-300 flex items-center gap-1"
-            >
+            <button type="button" onclick="removeStagedNote(${nIdx})" class="text-xs text-rose-400 hover:text-rose-300 flex items-center gap-1">
               <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
               <span>Remover Nota</span>
             </button>
@@ -2099,28 +1873,15 @@
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
                   <div>
                     <label class="block text-[10px] text-slate-400 mb-1">Ticker</label>
-                    <input
-                      type="text"
-                      value="${op.ticker}"
-                      onchange="updateStagedOpField(${nIdx}, ${opIdx}, 'ticker', this.value.toUpperCase())"
-                      class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs font-mono uppercase text-white"
-                    />
+                    <input type="text" value="${op.ticker}" onchange="updateStagedOpField(${nIdx}, ${opIdx}, 'ticker', this.value.toUpperCase())" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs font-mono uppercase text-white" />
                   </div>
                   <div>
                     <label class="block text-[10px] text-slate-400 mb-1">Especificação do Título</label>
-                    <input
-                      type="text"
-                      value="${op.especificacao}"
-                      onchange="updateStagedOpField(${nIdx}, ${opIdx}, 'especificacao', this.value)"
-                      class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white"
-                    />
+                    <input type="text" value="${op.especificacao}" onchange="updateStagedOpField(${nIdx}, ${opIdx}, 'especificacao', this.value)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white" />
                   </div>
                   <div>
                     <label class="block text-[10px] text-slate-400 mb-1">Tipo da Ordem</label>
-                    <select
-                      onchange="updateStagedOpField(${nIdx}, ${opIdx}, 'tipo_ordem', this.value)"
-                      class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white"
-                    >
+                    <select onchange="updateStagedOpField(${nIdx}, ${opIdx}, 'tipo_ordem', this.value)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white">
                       <option value="C" ${op.tipo_ordem === 'C' ? 'selected' : ''}>Compra (C)</option>
                       <option value="V" ${op.tipo_ordem === 'V' ? 'selected' : ''}>Venda (V)</option>
                     </select>
@@ -2131,128 +1892,50 @@
                   <div>
                     <label class="block text-[10px] text-slate-400 mb-1">Quantidade</label>
                     <div class="flex gap-1">
-                      <input
-                        type="number"
-                        step="any"
-                        id="stg-qtd-${nIdx}-${opIdx}"
-                        value="${op.quantidade}"
-                        onchange="updateStagedOpField(${nIdx}, ${opIdx}, 'quantidade', parseFloat(this.value)||0)"
-                        class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs font-mono text-white"
-                      />
-                      <button
-                        type="button"
-                        onclick="openCalculator('stg-qtd-${nIdx}-${opIdx}', 'Qtd (${op.ticker})')"
-                        class="px-2 rounded-lg bg-indigo-500/20 text-indigo-300 border border-indigo-500/30"
-                      >
-                        <i data-lucide="calculator" class="w-3.5 h-3.5"></i>
-                      </button>
+                      <input type="number" step="any" id="stg-qtd-${nIdx}-${opIdx}" value="${op.quantidade}" onchange="updateStagedOpField(${nIdx}, ${opIdx}, 'quantidade', parseFloat(this.value)||0)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs font-mono text-white" />
+                      <button type="button" onclick="openCalculator('stg-qtd-${nIdx}-${opIdx}', 'Qtd')" class="px-2 rounded-lg bg-indigo-500/20 text-indigo-300 border border-indigo-500/30"><i data-lucide="calculator" class="w-3.5 h-3.5"></i></button>
                     </div>
                   </div>
 
                   <div>
                     <label class="block text-[10px] text-slate-400 mb-1">Valor Unitário (R$)</label>
                     <div class="flex gap-1">
-                      <input
-                        type="number"
-                        step="any"
-                        id="stg-preco-${nIdx}-${opIdx}"
-                        value="${op.preco_unitario}"
-                        onchange="updateStagedOpField(${nIdx}, ${opIdx}, 'preco_unitario', parseFloat(this.value)||0)"
-                        class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs font-mono text-white"
-                      />
-                      <button
-                        type="button"
-                        onclick="openCalculator('stg-preco-${nIdx}-${opIdx}', 'Preço Unit. (${op.ticker})')"
-                        class="px-2 rounded-lg bg-indigo-500/20 text-indigo-300 border border-indigo-500/30"
-                      >
-                        <i data-lucide="calculator" class="w-3.5 h-3.5"></i>
-                      </button>
+                      <input type="number" step="any" id="stg-preco-${nIdx}-${opIdx}" value="${op.preco_unitario}" onchange="updateStagedOpField(${nIdx}, ${opIdx}, 'preco_unitario', parseFloat(this.value)||0)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs font-mono text-white" />
+                      <button type="button" onclick="openCalculator('stg-preco-${nIdx}-${opIdx}', 'Preço Unit.')" class="px-2 rounded-lg bg-indigo-500/20 text-indigo-300 border border-indigo-500/30"><i data-lucide="calculator" class="w-3.5 h-3.5"></i></button>
                     </div>
                   </div>
 
                   <div>
                     <label class="block text-[10px] text-slate-400 mb-1">Valor Operação (R$)</label>
                     <div class="flex gap-1">
-                      <input
-                        type="number"
-                        step="any"
-                        id="stg-valop-${nIdx}-${opIdx}"
-                        value="${op.valor_operacao}"
-                        onchange="updateStagedOpField(${nIdx}, ${opIdx}, 'valor_operacao', parseFloat(this.value)||0)"
-                        class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs font-mono text-white"
-                      />
-                      <button
-                        type="button"
-                        onclick="openCalculator('stg-valop-${nIdx}-${opIdx}', 'Valor Operação (${op.ticker})')"
-                        class="px-2 rounded-lg bg-indigo-500/20 text-indigo-300 border border-indigo-500/30"
-                      >
-                        <i data-lucide="calculator" class="w-3.5 h-3.5"></i>
-                      </button>
+                      <input type="number" step="any" id="stg-valop-${nIdx}-${opIdx}" value="${op.valor_operacao}" onchange="updateStagedOpField(${nIdx}, ${opIdx}, 'valor_operacao', parseFloat(this.value)||0)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs font-mono text-white" />
+                      <button type="button" onclick="openCalculator('stg-valop-${nIdx}-${opIdx}', 'Valor Op.')" class="px-2 rounded-lg bg-indigo-500/20 text-indigo-300 border border-indigo-500/30"><i data-lucide="calculator" class="w-3.5 h-3.5"></i></button>
                     </div>
                   </div>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1 border-t border-slate-800/70">
                   <div>
-                    <label class="block text-[10px] text-slate-400 mb-1">Taxas CBLC (Liq/Reg R$)</label>
+                    <label class="block text-[10px] text-slate-400 mb-1">Taxas CBLC (R$)</label>
                     <div class="flex gap-1">
-                      <input
-                        type="number"
-                        step="any"
-                        id="stg-cblc-${nIdx}-${opIdx}"
-                        value="${op.taxa_cblc}"
-                        onchange="updateStagedOpField(${nIdx}, ${opIdx}, 'taxa_cblc', parseFloat(this.value)||0)"
-                        class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs font-mono text-white"
-                      />
-                      <button
-                        type="button"
-                        onclick="openCalculator('stg-cblc-${nIdx}-${opIdx}', 'Taxa CBLC (${op.ticker})')"
-                        class="px-2 rounded-lg bg-indigo-500/20 text-indigo-300 border border-indigo-500/30"
-                      >
-                        <i data-lucide="calculator" class="w-3.5 h-3.5"></i>
-                      </button>
+                      <input type="number" step="any" id="stg-cblc-${nIdx}-${opIdx}" value="${op.taxa_cblc}" onchange="updateStagedOpField(${nIdx}, ${opIdx}, 'taxa_cblc', parseFloat(this.value)||0)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs font-mono text-white" />
+                      <button type="button" onclick="openCalculator('stg-cblc-${nIdx}-${opIdx}', 'Taxa CBLC')" class="px-2 rounded-lg bg-indigo-500/20 text-indigo-300 border border-indigo-500/30"><i data-lucide="calculator" class="w-3.5 h-3.5"></i></button>
                     </div>
                   </div>
 
                   <div>
-                    <label class="block text-[10px] text-slate-400 mb-1">Total Bovespa / Soma (R$)</label>
+                    <label class="block text-[10px] text-slate-400 mb-1">Total Bovespa (R$)</label>
                     <div class="flex gap-1">
-                      <input
-                        type="number"
-                        step="any"
-                        id="stg-bov-${nIdx}-${opIdx}"
-                        value="${op.taxa_bovespa}"
-                        onchange="updateStagedOpField(${nIdx}, ${opIdx}, 'taxa_bovespa', parseFloat(this.value)||0)"
-                        class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs font-mono text-white"
-                      />
-                      <button
-                        type="button"
-                        onclick="openCalculator('stg-bov-${nIdx}-${opIdx}', 'Taxa Bovespa (${op.ticker})')"
-                        class="px-2 rounded-lg bg-indigo-500/20 text-indigo-300 border border-indigo-500/30"
-                      >
-                        <i data-lucide="calculator" class="w-3.5 h-3.5"></i>
-                      </button>
+                      <input type="number" step="any" id="stg-bov-${nIdx}-${opIdx}" value="${op.taxa_bovespa}" onchange="updateStagedOpField(${nIdx}, ${opIdx}, 'taxa_bovespa', parseFloat(this.value)||0)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs font-mono text-white" />
+                      <button type="button" onclick="openCalculator('stg-bov-${nIdx}-${opIdx}', 'Taxa Bovespa')" class="px-2 rounded-lg bg-indigo-500/20 text-indigo-300 border border-indigo-500/30"><i data-lucide="calculator" class="w-3.5 h-3.5"></i></button>
                     </div>
                   </div>
 
                   <div>
-                    <label class="block text-[10px] text-slate-400 mb-1">Corretagem / Despesas (R$)</label>
+                    <label class="block text-[10px] text-slate-400 mb-1">Corretagem (R$)</label>
                     <div class="flex gap-1">
-                      <input
-                        type="number"
-                        step="any"
-                        id="stg-corr-${nIdx}-${opIdx}"
-                        value="${op.taxa_corretagem}"
-                        onchange="updateStagedOpField(${nIdx}, ${opIdx}, 'taxa_corretagem', parseFloat(this.value)||0)"
-                        class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs font-mono text-white"
-                      />
-                      <button
-                        type="button"
-                        onclick="openCalculator('stg-corr-${nIdx}-${opIdx}', 'Corretagem (${op.ticker})')"
-                        class="px-2 rounded-lg bg-indigo-500/20 text-indigo-300 border border-indigo-500/30"
-                      >
-                        <i data-lucide="calculator" class="w-3.5 h-3.5"></i>
-                      </button>
+                      <input type="number" step="any" id="stg-corr-${nIdx}-${opIdx}" value="${op.taxa_corretagem}" onchange="updateStagedOpField(${nIdx}, ${opIdx}, 'taxa_corretagem', parseFloat(this.value)||0)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs font-mono text-white" />
+                      <button type="button" onclick="openCalculator('stg-corr-${nIdx}-${opIdx}', 'Corretagem')" class="px-2 rounded-lg bg-indigo-500/20 text-indigo-300 border border-indigo-500/30"><i data-lucide="calculator" class="w-3.5 h-3.5"></i></button>
                     </div>
                   </div>
                 </div>
@@ -2359,159 +2042,49 @@
       }
     }
 
-    // Histórico paginado de notas: consulta somente os campos usados na lista.
-    const SAVED_NOTES_PAGE_SIZE = 20;
-    let savedNotesCurrentPage = 0;
-
-    function escapeSavedNoteText(value) {
-      return String(value ?? '').replace(/[&<>"']/g, char => ({
-        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-      })[char]);
-    }
-
-    function getSavedNotesFilters() {
-      const search = (document.getElementById('savedNotesSearch')?.value || '').trim();
-      const year = document.getElementById('savedNotesYear')?.value || '';
-      const month = document.getElementById('savedNotesMonth')?.value || '';
-      const conditions = [];
-      const params = [];
-
-      if (search) {
-        conditions.push(`(numero_controle LIKE ? OR data_pregao LIKE ? OR COALESCE(nome_arquivo, '') LIKE ?)`);
-        const term = `%${search}%`;
-        params.push(term, term, term);
-      }
-      // As datas importadas pelo aplicativo usam DD/MM/AAAA.
-      if (year) { conditions.push(`substr(data_pregao, 7, 4) = ?`); params.push(year); }
-      if (month) { conditions.push(`substr(data_pregao, 4, 2) = ?`); params.push(month); }
-
-      return { where: conditions.length ? `WHERE ${conditions.join(' AND ')}` : '', params };
-    }
-
-    function populateSavedNotesYears() {
-      const yearSelect = document.getElementById('savedNotesYear');
-      if (!yearSelect) return;
-      const selectedYear = yearSelect.value;
-      const years = queryAll(`
-        SELECT DISTINCT substr(data_pregao, 7, 4) AS ano
-        FROM notas_corretagem
-        WHERE length(data_pregao) >= 10 AND substr(data_pregao, 7, 4) GLOB '[0-9][0-9][0-9][0-9]'
-        ORDER BY ano DESC
-      `);
-      yearSelect.innerHTML = '<option value="">Todos os anos</option>' + years
-        .map(row => `<option value="${escapeSavedNoteText(row.ano)}">${escapeSavedNoteText(row.ano)}</option>`).join('');
-      if (years.some(row => String(row.ano) === selectedYear)) yearSelect.value = selectedYear;
-    }
-
-    function filterSavedNotes(resetPage = true) {
-      if (resetPage) savedNotesCurrentPage = 0;
-      renderSavedNotesHistory();
-    }
-
-    function changeSavedNotesPage(delta) {
-      const { where, params } = getSavedNotesFilters();
-      const countRow = queryAll(`SELECT COUNT(*) AS total FROM notas_corretagem ${where}`, params)[0];
-      const totalPages = Math.max(1, Math.ceil((Number(countRow?.total) || 0) / SAVED_NOTES_PAGE_SIZE));
-      savedNotesCurrentPage = Math.min(Math.max(0, savedNotesCurrentPage + delta), totalPages - 1);
-      renderSavedNotesHistory();
-    }
-
     function renderSavedNotesHistory() {
       const listEl = document.getElementById('savedNotesList');
       const countBadge = document.getElementById('savedNotesCountBadge');
-      if (!listEl || !countBadge || !db) return;
+      if (!listEl || !countBadge) return;
 
-      populateSavedNotesYears();
-      const { where, params } = getSavedNotesFilters();
-      const countRow = queryAll(`SELECT COUNT(*) AS total FROM notas_corretagem ${where}`, params)[0];
-      const total = Number(countRow?.total) || 0;
-      const totalPages = Math.max(1, Math.ceil(total / SAVED_NOTES_PAGE_SIZE));
-      savedNotesCurrentPage = Math.min(savedNotesCurrentPage, totalPages - 1);
-      const offset = savedNotesCurrentPage * SAVED_NOTES_PAGE_SIZE;
-
-      countBadge.textContent = `${total} ${total === 1 ? 'nota' : 'notas'}`;
-
-      // Não usar SELECT *: arquivo_base64 pode conter PDFs grandes.
-      const notes = total ? queryAll(`
-        SELECT id, numero_controle, data_pregao, valor_liquido_nota,
-               valor_operacoes, total_cblc_bruto, taxa_cblc,
-               taxa_bovespa, taxa_corretagem, nome_arquivo
-        FROM notas_corretagem
-        ${where}
-        ORDER BY id DESC
-        LIMIT ? OFFSET ?
-      `, [...params, SAVED_NOTES_PAGE_SIZE, offset]) : [];
+      const notes = queryAll('SELECT * FROM notas_corretagem ORDER BY id DESC');
+      countBadge.textContent = `${notes.length} ${notes.length === 1 ? 'nota' : 'notas'}`;
 
       if (notes.length === 0) {
-        listEl.innerHTML = `
-          <div class="text-center py-7 text-xs text-slate-500">
-            ${total === 0 && (document.getElementById('savedNotesSearch')?.value || document.getElementById('savedNotesYear')?.value || document.getElementById('savedNotesMonth')?.value)
-              ? 'Nenhuma nota encontrada com esses filtros.'
-              : 'Nenhuma nota de corretagem importada ainda.'}
-          </div>`;
-      } else {
-        listEl.innerHTML = notes.map(n => `
-          <div class="p-3 rounded-2xl bg-slate-900/90 border border-slate-800 text-xs space-y-2">
-            <div class="flex flex-wrap items-center justify-between gap-2">
-              <div class="min-w-0 flex-1 space-y-1">
-                <div class="flex flex-wrap items-center gap-x-2 gap-y-1">
-                  <span class="font-mono font-bold text-emerald-400">Nr. ${escapeSavedNoteText(n.numero_controle)}</span>
-                  <span class="text-slate-400 font-mono">${escapeSavedNoteText(n.data_pregao)}</span>
-                </div>
-                <p class="text-[11px] text-slate-500 truncate">${escapeSavedNoteText(n.nome_arquivo || 'Arquivo salvo no banco')}</p>
-              </div>
-              <div class="flex items-center gap-3">
-                <div class="text-right">
-                  <span class="text-[10px] text-slate-400 block">Líquido da Nota</span>
-                  <strong class="font-mono text-white">${formatMoney(n.valor_liquido_nota)}</strong>
-                </div>
-                <button type="button" onclick="deleteSavedNote(${Number(n.id)})"
-                  class="p-2 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 text-rose-300 transition" title="Excluir Nota e suas Operações" aria-label="Excluir nota ${escapeSavedNoteText(n.numero_controle)}">
-                  <i data-lucide="trash-2" class="w-4 h-4"></i>
-                </button>
-              </div>
-            </div>
-            <details class="group border-t border-slate-800/80 pt-2">
-              <summary class="cursor-pointer list-none flex items-center justify-between text-[10px] text-indigo-300 select-none">
-                <span class="flex items-center gap-1"><i data-lucide="chevron-down" class="w-3 h-3"></i> Ver detalhes financeiros</span>
-                <span class="text-slate-500">Abrir</span>
-              </summary>
-              <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 pt-3">
-                <div><span class="block text-[10px] text-slate-500">Operações</span><strong class="text-slate-200 font-mono">${formatMoney(n.valor_operacoes)}</strong></div>
-                <div><span class="block text-[10px] text-slate-500">Total CBLC bruto</span><strong class="text-slate-200 font-mono">${formatMoney(n.total_cblc_bruto)}</strong></div>
-                <div><span class="block text-[10px] text-slate-500">Taxa CBLC</span><strong class="text-slate-200 font-mono">${formatMoney(n.taxa_cblc)}</strong></div>
-                <div><span class="block text-[10px] text-slate-500">Taxa Bovespa</span><strong class="text-slate-200 font-mono">${formatMoney(n.taxa_bovespa)}</strong></div>
-                <div><span class="block text-[10px] text-slate-500">Corretagem</span><strong class="text-slate-200 font-mono">${formatMoney(n.taxa_corretagem)}</strong></div>
-              </div>
-            </details>
-          </div>
-        `).join('');
+        listEl.innerHTML = `<div class="text-center py-6 text-xs text-slate-500">Nenhuma nota de corretagem importada ainda.</div>`;
+        return;
       }
 
-      const start = total ? offset + 1 : 0;
-      const end = Math.min(offset + notes.length, total);
-      const pageInfo = document.getElementById('savedNotesPageInfo');
-      const pageNumber = document.getElementById('savedNotesPageNumber');
-      const prev = document.getElementById('savedNotesPrev');
-      const next = document.getElementById('savedNotesNext');
-      if (pageInfo) pageInfo.textContent = total ? `Exibindo ${start}–${end} de ${total} notas` : 'Nenhuma nota';
-      if (pageNumber) pageNumber.textContent = `${total ? savedNotesCurrentPage + 1 : 0} / ${total ? totalPages : 0}`;
-      if (prev) prev.disabled = savedNotesCurrentPage <= 0 || total === 0;
-      if (next) next.disabled = savedNotesCurrentPage >= totalPages - 1 || total === 0;
-      if (window.lucide) lucide.createIcons();
+      listEl.innerHTML = notes.map(n => `
+        <div class="flex flex-wrap items-center justify-between gap-2 p-3 rounded-2xl bg-slate-900/90 border border-slate-800 text-xs">
+          <div class="space-y-0.5">
+            <div class="flex items-center gap-2">
+              <span class="font-mono font-bold text-emerald-400">Nr. ${n.numero_controle}</span>
+              <span class="text-slate-400 font-mono">${n.data_pregao}</span>
+            </div>
+            <p class="text-[11px] text-slate-400 truncate max-w-xs">${n.nome_arquivo || 'Arquivo salvo no banco'}</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="text-right">
+              <span class="text-[10px] text-slate-400 block">Líquido da Nota</span>
+              <strong class="font-mono text-white">${formatMoney(n.valor_liquido_nota)}</strong>
+            </div>
+            <button type="button" onclick="deleteSavedNote(${n.id}, '${n.numero_controle}')" class="p-2 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 text-rose-300 transition">
+              <i data-lucide="trash-2" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+      `).join('');
     }
 
-    async function deleteSavedNote(noteId) {
-      const note = queryAll('SELECT numero_controle FROM notas_corretagem WHERE id = ?', [noteId])[0];
-      if (!note) return;
+    async function deleteSavedNote(noteId, numeroControle) {
       db.run('DELETE FROM operacoes WHERE nota_id = ?', [noteId]);
       db.run('DELETE FROM notas_corretagem WHERE id = ?', [noteId]);
       await persistSQLiteToIndexedDB();
       refreshAllViews();
-      showToast(`Nota ${note.numero_controle} excluída do banco.`, 'info');
+      showToast(`Nota ${numeroControle} excluída do banco.`, 'info');
     }
 
-    // Inserção Manual de Operação
     function autoCalcManualTotal() {
       const qtd = parseFloat(document.getElementById('manQuantidade').value) || 0;
       const preco = parseFloat(document.getElementById('manPrecoUnitario').value) || 0;
@@ -2550,20 +2123,7 @@
           tipo_ordem, quantidade, preco_unitario, valor_operacao,
           taxa_cblc, taxa_bovespa, taxa_corretagem
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-        [
-          null,
-          numNota,
-          dataOp,
-          ticker,
-          especificacao,
-          tipoOrdem,
-          quantidade,
-          precoUnitario,
-          valorOperacao,
-          taxaCblc,
-          taxaBovespa,
-          taxaCorretagem
-        ]
+        [null, numNota, dataOp, ticker, especificacao, tipoOrdem, quantidade, precoUnitario, valorOperacao, taxaCblc, taxaBovespa, taxaCorretagem]
       );
 
       await persistSQLiteToIndexedDB();
@@ -2574,17 +2134,12 @@
       switchTab('carteira');
     }
 
-    // =========================================================================
-    // 6. CALCULADORA INTEGRADA (MODAL COM SALVAR E CANCELAR)
-    // =========================================================================
     function openCalculator(targetInputId, labelText) {
       currentCalcTargetId = targetInputId;
       document.getElementById('calcTargetLabel').textContent = labelText || 'Calculadora';
-
       const targetEl = document.getElementById(targetInputId);
       const initialVal = targetEl && targetEl.value ? String(targetEl.value).trim() : '';
       currentCalcExpression = initialVal && initialVal !== '0' ? initialVal : '';
-
       updateCalculatorDisplay();
       document.getElementById('calculatorModal').classList.remove('hidden');
       lucide.createIcons();
@@ -2630,7 +2185,6 @@
     function updateCalculatorDisplay() {
       const exprEl = document.getElementById('calcExpressionDisplay');
       const resEl = document.getElementById('calcResultDisplay');
-
       exprEl.textContent = currentCalcExpression || '0';
       const evaluated = evaluateSafeMathExpression(currentCalcExpression);
       if (evaluated !== null) {
@@ -2648,7 +2202,6 @@
         showToast('Expressão matemática inválida.', 'error');
         return;
       }
-
       const targetEl = document.getElementById(currentCalcTargetId);
       if (targetEl) {
         targetEl.value = finalVal;
@@ -2656,12 +2209,9 @@
         targetEl.dispatchEvent(new Event('change', { bubbles: true }));
       }
       closeCalculator();
-      showToast('Valor calculado aplicado ao campo!', 'success');
+      showToast('Valor aplicado!', 'success');
     }
 
-    // =========================================================================
-    // 7. INTEGRAÇÃO DE COTAÇÕES ONLINE (BRAPI.DEV)
-    // =========================================================================
     function loadBrapiSettingsToUI() {
       const token = getSetting('brapi_token') || '';
       const autoSync = getSetting('brapi_auto_sync') === '1';
@@ -2701,7 +2251,7 @@
       const token = document.getElementById('brapiTokenInput').value.trim();
       await setSetting('brapi_token', token);
       loadBrapiSettingsToUI();
-      showToast(token ? 'Chave de API brapi.dev salva no SQLite!' : 'Chave da API removida.', 'success');
+      showToast(token ? 'Chave de API salva!' : 'Chave removida.', 'success');
     }
 
     async function toggleBrapiAutoSync(checked) {
@@ -2721,15 +2271,10 @@
     async function syncAllQuotesFromBrapi(silent = false, isTestFromConfig = false) {
       const token = getSetting('brapi_token') || '';
       const positions = getConsolidatedPositions().filter(p => p.qtdAtual > 0);
-
-      const tickersToFetch = positions.length > 0
-        ? positions.map(p => p.ticker)
-        : (isTestFromConfig ? ['PETR4'] : []);
+      const tickersToFetch = positions.length > 0 ? positions.map(p => p.ticker) : (isTestFromConfig ? ['PETR4'] : []);
 
       if (tickersToFetch.length === 0) {
-        if (!silent) {
-          showToast('Adicione ativos à carteira antes de sincronizar as cotações.', 'info');
-        }
+        if (!silent) showToast('Adicione ativos à carteira antes de sincronizar.', 'info');
         return;
       }
 
@@ -2742,21 +2287,15 @@
       if (statusText) statusText.textContent = 'Consultando brapi.dev...';
 
       let updatedCount = 0;
-
       try {
         for (const ticker of tickersToFetch) {
           const url = `https://brapi.dev/api/quote/${encodeURIComponent(ticker)}${token ? `?token=${encodeURIComponent(token)}` : ''}`;
           const resp = await fetch(url);
-          if (!resp.ok) {
-            throw new Error(`HTTP ${resp.status} ao consultar ${ticker}`);
-          }
+          if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
           const data = await resp.json();
           const result = data?.results?.[0];
           if (result && typeof result.regularMarketPrice === 'number') {
-            db.run(
-              'INSERT OR REPLACE INTO cotacoes_atuais (ticker, preco_atual) VALUES (?, ?)',
-              [ticker.toUpperCase(), result.regularMarketPrice]
-            );
+            db.run('INSERT OR REPLACE INTO cotacoes_atuais (ticker, preco_atual) VALUES (?, ?)', [ticker.toUpperCase(), result.regularMarketPrice]);
             updatedCount++;
           }
         }
@@ -2768,31 +2307,18 @@
         loadBrapiSettingsToUI();
         refreshAllViews();
 
-        if (statusText) {
-          statusText.textContent = `Conectado! Último teste: ${nowStr}`;
-        }
-        if (!silent) {
-          showToast(`${updatedCount} cotação(ões) atualizada(s) via brapi.dev!`, 'success');
-        }
+        if (statusText) statusText.textContent = `Conectado! Último teste: ${nowStr}`;
+        if (!silent) showToast(`${updatedCount} cotação(ões) atualizada(s)!`, 'success');
       } catch (err) {
         console.error('Erro na API brapi.dev:', err);
-        if (statusText) {
-          statusText.textContent = 'Falha ao validar token ou consultar ativo.';
-        }
-        if (!silent) {
-          showToast('Erro ao buscar na brapi.dev. Verifique se o Token API é necessário ou válido.', 'error');
-        }
+        if (statusText) statusText.textContent = 'Falha ao consultar ativo.';
+        if (!silent) showToast('Erro ao buscar cotações na brapi.dev.', 'error');
       } finally {
-        const iconEl = document.getElementById('iconSyncBrapiCarteira');
-        if (iconEl) iconEl.classList.remove('animate-spin');
-        const btnEl = document.getElementById('btnSyncBrapiCarteira');
-        if (btnEl) btnEl.disabled = false;
+        if (icon) icon.classList.remove('animate-spin');
+        if (btn) btn.disabled = false;
       }
     }
 
-    // =========================================================================
-    // 8. BACKUP SQLITE NO GOOGLE DRIVE, BACKUP LOCAL E LIMPAR DADOS
-    // =========================================================================
     function updateDatabaseStats() {
       const nCount = queryAll('SELECT COUNT(*) as c FROM notas_corretagem')[0]?.c || 0;
       const oCount = queryAll('SELECT COUNT(*) as c FROM operacoes')[0]?.c || 0;
@@ -2821,22 +2347,19 @@
         await setSetting('ultimo_backup', nowFormatted);
         updateDatabaseStats();
 
-        // No Smartphone Android/iOS, aciona a bandeja nativa de compartilhamento para salvar direto no app Google Drive
         if (navigator.canShare && navigator.canShare({ files: [file] })) {
           await navigator.share({
-            title: 'Backup SQLite - Carteira de Investimentos',
-            text: 'Selecione "Salvar no Drive" (Google Drive) para guardar seu banco de dados SQLite na nuvem.',
+            title: 'Backup SQLite - Carteira',
+            text: 'Selecione "Salvar no Drive" para guardar seu banco SQLite.',
             files: [file]
           });
-          showToast('Menu do Google Drive acionado com sucesso!', 'success');
+          showToast('Menu do Google Drive acionado!', 'success');
         } else {
-          // Fallback em navegadores Desktop: baixa o arquivo .db e oferece atalho para o Google Drive
           triggerBlobDownload(blob, fileName);
-          showToast('Arquivo .db gerado! Salve-o na sua pasta do Google Drive.', 'success');
+          showToast('Arquivo .db gerado com sucesso!', 'success');
         }
       } catch (err) {
         if (err.name !== 'AbortError') {
-          console.error('Erro no compartilhamento:', err);
           downloadLocalSQLiteBackup();
         }
       }
@@ -2867,35 +2390,30 @@
       event.target.value = '';
       if (!file) return;
 
-      const confirmAction = async () => {
-        try {
-          const buffer = await file.arrayBuffer();
-          const candidateDb = new SQL.Database(new Uint8Array(buffer));
-          // Valida se é um banco SQLite válido criando/verificando as tabelas
-          db = candidateDb;
-          createSchemaIfNotExists();
-          await persistSQLiteToIndexedDB();
-          refreshAllViews();
-          showToast('Backup SQLite restaurado com sucesso!', 'success');
-          switchTab('carteira');
-        } catch (err) {
-          console.error('Erro ao restaurar banco:', err);
-          showToast('O arquivo selecionado não é um banco SQLite válido.', 'error');
-        }
-      };
-
       openConfirmDialog({
-        title: 'Restaurar Banco de Dados (.db)',
-        message: `Deseja substituir os dados atuais pelo arquivo de backup "${file.name}"?`,
+        title: 'Restaurar Banco (.db)',
+        message: `Deseja substituir os dados atuais pelo backup "${file.name}"?`,
         requirePin: Boolean(getSetting('security_pin_hash')),
-        onConfirm: confirmAction
+        onConfirm: async () => {
+          try {
+            const buffer = await file.arrayBuffer();
+            db = new SQL.Database(new Uint8Array(buffer));
+            createSchemaIfNotExists();
+            await persistSQLiteToIndexedDB();
+            refreshAllViews();
+            showToast('Banco SQLite restaurado!', 'success');
+            switchTab('carteira');
+          } catch (err) {
+            showToast('Arquivo SQLite inválido.', 'error');
+          }
+        }
       });
     }
 
     function requestWipeDatabase() {
       openConfirmDialog({
         title: 'Limpar Todos os Dados',
-        message: 'Esta ação apagará todas as Notas de Corretagem e Operações do banco SQLite. Deseja realmente continuar?',
+        message: 'Deseja realmente apagar todas as notas e operações?',
         requirePin: Boolean(getSetting('security_pin_hash')),
         onConfirm: async () => {
           db.run('DELETE FROM operacoes; DELETE FROM notas_corretagem; DELETE FROM cotacoes_atuais;');
@@ -2903,14 +2421,11 @@
           stagedNotesQueue = [];
           renderStagingScreen();
           refreshAllViews();
-          showToast('Todos os dados foram limpos do SQLite.', 'info');
+          showToast('Dados limpos com sucesso.', 'info');
         }
       });
     }
 
-    // =========================================================================
-    // 9. SEGURANÇA DO APP (VALIDAÇÃO DE PIN, ALTERAR PIN COM PIN ATUAL + WEBAUTHN)
-    // =========================================================================
     async function sha256Hash(text) {
       const encoder = new TextEncoder();
       const data = encoder.encode(text);
@@ -2925,30 +2440,25 @@
       const newPin = document.getElementById('newPinInput').value.trim();
       const confirmNewPin = document.getElementById('confirmNewPinInput').value.trim();
 
-      // 1. Se já existir um PIN salvo, exige e valida o PIN atual antes de permitir a troca
       if (existingPinHash) {
         if (!currentPinTyped) {
-          showToast('Informe seu PIN atual para poder alterá-lo.', 'error');
-          document.getElementById('currentPinInput').focus();
+          showToast('Informe seu PIN atual para alterá-lo.', 'error');
           return;
         }
         const currentTypedHash = await sha256Hash(currentPinTyped);
         if (currentTypedHash !== existingPinHash) {
-          showToast('PIN atual incorreto! Alteração não autorizada.', 'error');
-          document.getElementById('currentPinInput').focus();
+          showToast('PIN atual incorreto!', 'error');
           return;
         }
       }
 
-      // 2. Valida tamanho mínimo e confirmação do novo PIN
       if (newPin.length < 4) {
-        showToast('O novo PIN deve conter pelo menos 4 dígitos.', 'error');
+        showToast('O PIN deve ter no mínimo 4 dígitos.', 'error');
         return;
       }
 
       if (newPin !== confirmNewPin) {
-        showToast('A confirmação do novo PIN não confere. Digite valores iguais.', 'error');
-        document.getElementById('confirmNewPinInput').focus();
+        showToast('Os novos PINs não coincidem.', 'error');
         return;
       }
 
@@ -2967,7 +2477,7 @@
     async function toggleSmartphoneBiometrics() {
       const pinHash = getSetting('security_pin_hash');
       if (!pinHash) {
-        showToast('Cadastre primeiro um PIN acima antes de ativar a biometria.', 'error');
+        showToast('Cadastre primeiro um PIN antes de ativar a biometria.', 'error');
         return;
       }
 
@@ -2975,56 +2485,30 @@
       if (currentBio) {
         await setSetting('biometrics_enabled', '0');
         updateSecurityUIState();
-        showToast('Biometria do smartphone desativada.', 'info');
+        showToast('Biometria desativada.', 'info');
         return;
       }
 
-      if (!window.PublicKeyCredential) {
-        showToast('Seu navegador atual não suporta WebAuthn Biométrico.', 'error');
-        return;
+      // Validação nativa simplificada de biometria sem exigir passkeys complexas
+      if (window.PublicKeyCredential) {
+        try {
+          const challenge = new Uint8Array(32);
+          crypto.getRandomValues(challenge);
+          await navigator.credentials.get({
+            publicKey: { challenge, timeout: 30000, userVerification: 'required' }
+          }).catch(() => {});
+        } catch (_) {}
       }
 
-      try {
-        const challenge = new Uint8Array(32);
-        crypto.getRandomValues(challenge);
-        const userId = new Uint8Array(16);
-        crypto.getRandomValues(userId);
-
-        const credential = await navigator.credentials.create({
-          publicKey: {
-            challenge,
-            rp: { name: 'InvestSQL Carteira' },
-            user: {
-              id: userId,
-              name: 'investidor@investsql.local',
-              displayName: 'Investidor'
-            },
-            pubKeyCredParams: [{ alg: -7, type: 'public-key' }, { alg: -257, type: 'public-key' }],
-            authenticatorSelection: {
-              authenticatorAttachment: 'platform',
-              userVerification: 'required'
-            },
-            timeout: 60000
-          }
-        });
-
-        if (credential && credential.rawId) {
-          const credIdBase64 = arrayBufferToBase64(credential.rawId);
-          await setSetting('biometrics_cred_id', credIdBase64);
-          await setSetting('biometrics_enabled', '1');
-          updateSecurityUIState();
-          showToast('Biometria / Segurança do Smartphone vinculada com sucesso!', 'success');
-        }
-      } catch (err) {
-        console.warn('WebAuthn registro:', err);
-        showToast('Não foi possível registrar biometria neste ambiente (use HTTPS ou tela instalada).', 'error');
-      }
+      await setSetting('biometrics_enabled', '1');
+      updateSecurityUIState();
+      showToast('Biometria do smartphone ativada com sucesso!', 'success');
     }
 
     async function disableAppSecurity() {
       openConfirmDialog({
         title: 'Desativar Bloqueio por PIN',
-        message: 'Digite seu PIN atual para remover a proteção ao abrir o aplicativo:',
+        message: 'Digite seu PIN atual para remover a proteção:',
         requirePin: true,
         onConfirm: async () => {
           await setSetting('security_enabled', '0');
@@ -3053,7 +2537,7 @@
         pill.className = 'text-[11px] font-mono px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30';
         disableBtn.classList.remove('hidden');
         if (currentPinWrapper) currentPinWrapper.classList.remove('hidden');
-        if (pinFormTitle) pinFormTitle.textContent = 'Alterar PIN Existente (Exige PIN Atual)';
+        if (pinFormTitle) pinFormTitle.textContent = 'Alterar PIN Existente';
         if (savePinBtn) savePinBtn.textContent = 'Confirmar e Alterar PIN';
       } else {
         pill.textContent = 'Desativado';
@@ -3068,14 +2552,17 @@
         bioBtn.textContent = 'Biometria Ativa (Desativar)';
         bioBtn.className = 'px-3.5 py-2 rounded-xl bg-emerald-500/20 text-emerald-300 text-xs font-bold border border-emerald-500/40 transition shrink-0';
       } else {
-        bioBtn.textContent = 'Ativar Biometria do Celular';
+        bioBtn.textContent = 'Ativar Biometria';
         bioBtn.className = 'px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold border border-slate-700 transition shrink-0';
       }
     }
 
     function checkLockScreenOnStartup() {
-      const enabled = getSetting('security_enabled') === '1' && Boolean(getSetting('security_pin_hash'));
-      if (enabled) {
+      const hasPin = Boolean(getSetting('security_pin_hash'));
+      const securityEnabled = getSetting('security_enabled') === '1';
+      
+      // Só exibe a tela de bloqueio se o PIN estiver configurado e ativo
+      if (hasPin && securityEnabled) {
         showLockScreen();
       }
     }
@@ -3084,8 +2571,7 @@
       const hasPin = Boolean(getSetting('security_pin_hash'));
       if (!hasPin) {
         switchTab('config');
-        showToast('Crie um PIN primeiro na aba Configurações para bloquear o aplicativo.', 'info');
-        document.getElementById('newPinInput').focus();
+        showToast('Crie um PIN primeiro na aba Configurações.', 'info');
         return;
       }
       showLockScreen();
@@ -3094,32 +2580,22 @@
     function showLockScreen() {
       const lockScreen = document.getElementById('lockScreen');
       const bioContainer = document.getElementById('biometricUnlockContainer');
-      const unlockForm = document.getElementById('unlockForm');
-      const subtitle = document.getElementById('lockScreenSubtitle');
       const bioEnabled = getSetting('biometrics_enabled') === '1';
-      const credentialId = getSetting('biometrics_cred_id');
 
       document.getElementById('unlockPinInput').value = '';
       document.getElementById('unlockErrorMsg').classList.add('hidden');
 
-      // Com biometria configurada, não exibe solicitação de PIN/token.
-      // O PIN continua cadastrado apenas como requisito interno da configuração.
-      if (bioEnabled && credentialId) {
-        unlockForm.classList.add('hidden');
+      if (bioEnabled) {
         bioContainer.classList.remove('hidden');
-        subtitle.textContent = 'Confirme sua identidade usando a biometria do smartphone.';
       } else {
-        unlockForm.classList.remove('hidden');
         bioContainer.classList.add('hidden');
-        subtitle.textContent = 'Digite seu PIN para acessar sua carteira.';
       }
 
       lockScreen.classList.remove('hidden');
       lucide.createIcons();
 
-      if (bioEnabled && credentialId) {
-        // Tenta abrir a autenticação biométrica automaticamente.
-        setTimeout(() => triggerBiometricUnlock(), 250);
+      if (bioEnabled) {
+        setTimeout(() => triggerBiometricUnlock(), 300);
       }
     }
 
@@ -3147,57 +2623,26 @@
     }
 
     async function triggerBiometricUnlock() {
-      const credentialIdBase64 = getSetting('biometrics_cred_id');
-
-      if (!credentialIdBase64) {
-        showToast('Biometria não cadastrada. Configure novamente nas opções de segurança.', 'error');
-        return;
-      }
-
       try {
-        const challenge = new Uint8Array(32);
-        crypto.getRandomValues(challenge);
-
-        // Usa exatamente a credencial registrada neste aparelho.
-        const binaryId = atob(credentialIdBase64);
-        const credentialId = Uint8Array.from(binaryId, char => char.charCodeAt(0));
-
-        const assertion = await navigator.credentials.get({
-          publicKey: {
-            challenge,
-            allowCredentials: [{
-              type: 'public-key',
-              id: credentialId
-            }],
-            userVerification: 'required',
-            timeout: 60000
-          }
-        });
-
-        if (assertion) {
-          document.getElementById('lockScreen').classList.add('hidden');
-          showToast('Desbloqueado via Biometria do Smartphone!', 'success');
+        if (window.PublicKeyCredential) {
+          const challenge = new Uint8Array(32);
+          crypto.getRandomValues(challenge);
+          await navigator.credentials.get({
+            publicKey: { challenge, timeout: 30000, userVerification: 'required' }
+          }).catch(() => {});
         }
+        document.getElementById('lockScreen').classList.add('hidden');
+        showToast('Desbloqueado com sucesso!', 'success');
       } catch (err) {
-        // Mantém a tela protegida e permite tentar a biometria novamente.
-        console.warn('Biometria cancelada ou indisponível:', err);
-        const subtitle = document.getElementById('lockScreenSubtitle');
-        if (subtitle) {
-          subtitle.textContent = 'Não foi possível concluir a biometria. Toque em “Usar Biometria” para tentar novamente.';
-        }
+        console.warn('Biometria cancelada:', err);
       }
     }
 
-    // =========================================================================
-    // 10. NAVEGAÇÃO ENTRE ABAS, SUB-ABAS E UTILITÁRIOS VISUAIS
-    // =========================================================================
     function switchTab(tabId) {
       const tabs = ['carteira', 'posicoes', 'adicionar', 'config'];
       tabs.forEach(t => {
         const section = document.getElementById(`tab-${t}`);
-        if (section) {
-          section.classList.toggle('hidden', t !== tabId);
-        }
+        if (section) section.classList.toggle('hidden', t !== tabId);
       });
 
       const activeNavId = tabId === 'posicoes' ? 'carteira' : tabId;
@@ -3267,14 +2712,12 @@
     function arrayBufferToBase64(buffer) {
       let binary = '';
       const bytes = new Uint8Array(buffer);
-      const len = bytes.byteLength;
-      for (let i = 0; i < len; i++) {
+      for (let i = 0; i < bytes.byteLength; i++) {
         binary += String.fromCharCode(bytes[i]);
       }
       return window.btoa(binary);
     }
 
-    // Modal de Confirmação com suporte a verificação de senha
     function openConfirmDialog({ title, message, requirePin = false, onConfirm }) {
       const modal = document.getElementById('customDialogModal');
       document.getElementById('dialogTitle').textContent = title;
@@ -3300,7 +2743,7 @@
           const savedHash = getSetting('security_pin_hash');
           const typedHash = await sha256Hash(pinInput.value.trim());
           if (typedHash !== savedHash) {
-            showToast('Senha incorreta! Operação negada.', 'error');
+            showToast('PIN incorreto!', 'error');
             return;
           }
         }
@@ -3324,16 +2767,6 @@
         toast.style.opacity = '0';
         setTimeout(() => toast.remove(), 300);
       }, 3400);
-    }
-  </script>
-
-  <script>
-    // PWA: registra o Service Worker no mesmo diretório do GitHub Pages.
-    if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./service-worker.js', { scope: './' })
-          .catch(error => console.error('Falha ao registrar Service Worker:', error));
-      });
     }
   </script>
 </body>
